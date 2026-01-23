@@ -10,4 +10,9 @@ public class ApplicationDbContext : IdentityDbContext
         : base(options)
     {
     }
+    public virtual DbSet<Models.Author> Authors { get; set; } = null!;
+    public virtual DbSet<Models.Book> Books { get; set; } = null!;
+    public virtual DbSet<Models.Country> Countries { get; set; } = null!;
+    public virtual DbSet<Models.Genre> Genres { get; set; } = null!;
+    public virtual DbSet<Models.Review> Reviews { get; set; } = null!;
 }
