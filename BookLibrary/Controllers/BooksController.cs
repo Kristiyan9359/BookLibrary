@@ -103,8 +103,10 @@ public class BooksController : Controller
         context.Books.Add(book);
         context.SaveChanges();
 
-        return RedirectToAction(nameof(Create));
-    }
+        TempData["SuccessMessage"] = "Book was created successfully.";
+
+        return RedirectToAction(nameof(Details), new { id = book.Id });
+}
 
     [HttpGet]
     public IActionResult Details(int id)
