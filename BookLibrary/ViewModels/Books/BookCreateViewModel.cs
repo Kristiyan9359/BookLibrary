@@ -21,6 +21,11 @@ public class BookCreateViewModel
     [Display(Name = "Genre")]
     public int GenreId { get; set; }
 
+    [Required]
+    [Display(Name = "Publication Year")]
+    [Range(1450, 2100)]
+    public int Year { get; set; }
+
     public IEnumerable<SelectListItem> Authors { get; set; }
         = new List<SelectListItem>();
 

@@ -1,0 +1,39 @@
+﻿@model BookLibrary.ViewModels.Books.BookDetailsViewModel
+
+@{
+    ViewData["Title"] = "Book Details";
+}
+
+<h2>@Model.Title</h2>
+
+<ul class="list-group mb-3">
+    <li class="list-group-item"><strong>Author:</strong> @Model.Author</li>
+    <li class="list-group-item"><strong>Country:</strong> @Model.Country</li>
+    <li class="list-group-item"><strong>Genre:</strong> @Model.Genre</li>
+    <li class="list-group-item"><strong>Year:</strong> @Model.Year</li>
+    <li class="list-group-item"><strong>Pages:</strong> @Model.Pages</li>
+</ul>
+
+<h4>Reviews</h4>
+
+@if (!Model.Reviews.Any())
+{
+    <p>No reviews yet.</p>
+}
+else
+{
+    <ul class="list-group mb-3">
+        @foreach (var review in Model.Reviews)
+        {
+            <li class="list-group-item">
+                <strong>Rating:</strong> @review.Rating / 5 <br />
+                <small>@review.CreatedOn.ToShortDateString()</small>
+                <p>@review.Comment</p>
+            </li>
+        }
+    </ul>
+}
+
+<a asp-action="Index" class="btn btn-secondary">
+    Back to list
+</a>
