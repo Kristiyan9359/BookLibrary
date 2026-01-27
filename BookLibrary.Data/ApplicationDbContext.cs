@@ -1,6 +1,6 @@
 ﻿namespace BookLibrary.Data;
 
-using BookLibrary.Data.Configuration;
+using BookLibrary.Data.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 

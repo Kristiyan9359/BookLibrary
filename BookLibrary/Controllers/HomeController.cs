@@ -1,4 +1,4 @@
-namespace BookLibrary.Controllers;
+namespace BookLibrary.Web.Controllers;
 
 using BookLibrary.Models;
 using Microsoft.AspNetCore.Mvc;

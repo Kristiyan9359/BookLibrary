@@ -11,8 +11,19 @@
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.23" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.23" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.23" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.23" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.23" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.23" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration" Version="8.0.23" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BookLibrary.Common\BookLibrary.Common.csproj" />
+    <ProjectReference Include="..\BookLibrary.Data.Models\BookLibrary.Data.Models.csproj" />
+    <ProjectReference Include="..\BookLibrary.Data\BookLibrary.Data.csproj" />
+    <ProjectReference Include="..\BookLibrary.Services.Core\BookLibrary.Services.Core.csproj" />
+    <ProjectReference Include="..\BookLibrary.ViewModels\BookLibrary.ViewModels.csproj" />
   </ItemGroup>
 
 </Project>

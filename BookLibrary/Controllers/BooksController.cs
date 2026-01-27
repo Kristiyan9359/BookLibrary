@@ -1,4 +1,4 @@
-﻿namespace BookLibrary.Controllers;
+﻿namespace BookLibrary.Web.Controllers;
 
 using BookLibrary.Data;
 using BookLibrary.Data.Models;

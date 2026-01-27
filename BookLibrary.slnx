@@ -1,6 +1,17 @@
 <Solution>
+  <Folder Name="/Data/">
+    <Project Path="BookLibrary.Data.Models/BookLibrary.Data.Models.csproj" Id="a66aa3d7-a3c9-4f74-94fe-4f9b60809152" />
+    <Project Path="BookLibrary.Data/BookLibrary.Data.csproj" Id="a80bc074-8a3f-4f98-9782-a2fab2a3e87e" />
+  </Folder>
+  <Folder Name="/Service/">
+    <Project Path="BookLibrary.Services.Core/BookLibrary.Services.Core.csproj" Id="0333fe04-9a3d-4dcd-a573-217bb7c5f88c" />
+  </Folder>
   <Folder Name="/Solution Items/">
     <File Path="README.md" />
   </Folder>
-  <Project Path="BookLibrary/BookLibrary.csproj" />
+  <Folder Name="/WEB/">
+    <Project Path="BookLibrary.ViewModels/BookLibrary.ViewModels.csproj" Id="02133c48-6e2f-49de-a290-6ffec04e710e" />
+    <Project Path="BookLibrary/BookLibrary.Web.csproj" />
+  </Folder>
+  <Project Path="BookLibrary.Common/BookLibrary.Common.csproj" Id="10058d42-4833-46eb-aefa-0bc0fa18773a" />
 </Solution>

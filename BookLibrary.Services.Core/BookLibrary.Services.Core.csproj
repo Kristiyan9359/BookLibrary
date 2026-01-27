@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BookLibrary.Data.Models\BookLibrary.Data.Models.csproj" />
+    <ProjectReference Include="..\BookLibrary.Data\BookLibrary.Data.csproj" />
+    <ProjectReference Include="..\BookLibrary.ViewModels\BookLibrary.ViewModels.csproj" />
+  </ItemGroup>
+
+</Project>
