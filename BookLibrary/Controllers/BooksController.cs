@@ -106,7 +106,7 @@ public class BooksController : Controller
         TempData["SuccessMessage"] = "Book was created successfully.";
 
         return RedirectToAction(nameof(Details), new { id = book.Id });
-}
+    }
 
     [HttpGet]
     public IActionResult Details(int id)
@@ -222,5 +222,40 @@ public class BooksController : Controller
 
         TempData["SuccessMessage"] = "Book was updated successfully.";
         return RedirectToAction(nameof(Details), new { id = book.Id });
+    }
+
+    [HttpGet]
+    public IActionResult Delete(int id)
+    {
+        var book = context.Books
+            .Include(b => b.Author)
+            .Include(b => b.Genre)
+            .FirstOrDefault(b => b.Id == id);
+
+        if (book == null)
+        {
+            return NotFound();
+        }
+
+        return View(book);
+    }
+
+
+    [HttpPost]
+    public IActionResult DeleteConfirmed(int id)
+    {
+        var book = context.Books.Find(id);
+
+        if (book == null)
+        {
+            return NotFound();
+        }
+
+        context.Books.Remove(book);
+        context.SaveChanges();
+
+        TempData["SuccessMessage"] = "Book was deleted successfully.";
+
+        return RedirectToAction(nameof(Index));
     }
 }
