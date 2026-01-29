@@ -2,29 +2,31 @@
 
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.Rendering;
-
+using static BookLibrary.Common.ValidationConstants;
 
 public class BookCreateViewModel
 {
-    [Required]
-    [MaxLength(150)]
+    [Required(ErrorMessage ="Tittle is requiered")]
+    [MinLength(BookTitleMinLength, ErrorMessage = "Title must be at least 2 characters long.")]
+    [MaxLength(BookTitleMaxLength)]
     public string Title { get; set; } = null!;
 
-    [Range(1, 5000)]
+    [Range(BookMinPages, BookMaxPages, ErrorMessage = "Pages must be between 1 and 5000.")]
     public int Pages { get; set; }
 
-    [Required]
+    [Required(ErrorMessage = "Year is requiered")]
+    [Display(Name = "Publication Year")]
+    [Range(BookMinYear, BookMaxYear, ErrorMessage = "The Year must be between 1450 and 2100.")]
+    public int Year { get; set; }
+
+    [Required(ErrorMessage = "Author is requiered")]
     [Display(Name = "Author")]
     public int AuthorId { get; set; }
 
-    [Required]
+    [Required(ErrorMessage ="Genre is requiered")]
     [Display(Name = "Genre")]
     public int GenreId { get; set; }
 
-    [Required]
-    [Display(Name = "Publication Year")]
-    [Range(1450, 2100)]
-    public int Year { get; set; }
 
     public IEnumerable<SelectListItem> Authors { get; set; }
         = new List<SelectListItem>();

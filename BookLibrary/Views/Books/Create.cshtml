@@ -12,6 +12,11 @@
         <input asp-for="Title" class="form-control" />
         <span asp-validation-for="Title" class="text-danger"></span>
     </div>
+    <div class="mb-3">
+        <label asp-for="Year" class="form-label"></label>
+        <input asp-for="Year" class="form-control" />
+        <span asp-validation-for="Year" class="text-danger"></span>
+    </div>
 
     <div class="mb-3">
         <label asp-for="Pages" class="form-label"></label>
@@ -37,12 +42,6 @@
             <option value="">-- Select genre --</option>
         </select>
         <span asp-validation-for="GenreId" class="text-danger"></span>
-    </div>
-
-    <div class="mb-3">
-        <label asp-for="Year" class="form-label"></label>
-        <input asp-for="Year" class="form-control" />
-        <span asp-validation-for="Year" class="text-danger"></span>
     </div>
 
     <button type="submit" class="btn btn-primary">
