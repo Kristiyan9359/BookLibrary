@@ -145,4 +145,82 @@ public class BooksController : Controller
 
         return View(model);
     }
+
+
+    [HttpGet]
+    public IActionResult Edit(int id)
+    {
+        var book = context.Books.FirstOrDefault(b => b.Id == id);
+        if (book == null) return NotFound();
+
+        var model = new BookEditViewModel
+        {
+            Id = book.Id,
+            Title = book.Title,
+            Pages = book.Pages,
+            Year = book.Year,
+            AuthorId = book.AuthorId,
+            GenreId = book.GenreId,
+            Authors = context.Authors
+                .OrderBy(a => a.LastName)
+                .Select(a => new SelectListItem
+                {
+                    Value = a.Id.ToString(),
+                    Text = a.FirstName + " " + a.LastName
+                })
+                .ToList(),
+            Genres = context.Genres
+                .OrderBy(g => g.Name)
+                .Select(g => new SelectListItem
+                {
+                    Value = g.Id.ToString(),
+                    Text = g.Name
+                })
+                .ToList()
+        };
+
+        return View(model);
+    }
+
+
+    [HttpPost]
+    public IActionResult Edit(BookEditViewModel model)
+    {
+        if (!ModelState.IsValid)
+        {
+            model.Authors = context.Authors
+                .OrderBy(a => a.LastName)
+                .Select(a => new SelectListItem
+                {
+                    Value = a.Id.ToString(),
+                    Text = a.FirstName + " " + a.LastName
+                })
+                .ToList();
+
+            model.Genres = context.Genres
+                .OrderBy(g => g.Name)
+                .Select(g => new SelectListItem
+                {
+                    Value = g.Id.ToString(),
+                    Text = g.Name
+                })
+                .ToList();
+
+            return View(model);
+        }
+
+        var book = context.Books.Find(model.Id);
+        if (book == null) return NotFound();
+
+        book.Title = model.Title;
+        book.Pages = model.Pages;
+        book.Year = model.Year;
+        book.AuthorId = model.AuthorId;
+        book.GenreId = model.GenreId;
+
+        context.SaveChanges();
+
+        TempData["SuccessMessage"] = "Book was updated successfully.";
+        return RedirectToAction(nameof(Details), new { id = book.Id });
+    }
 }
