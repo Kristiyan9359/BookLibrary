@@ -13,4 +13,8 @@ public class BookIndexViewModel
     public int Year { get; set; }
 
     public int Pages { get; set; }
+
+    public double? AverageRating { get; set; }
+
+    public int ReviewsCount { get; set; }
 }

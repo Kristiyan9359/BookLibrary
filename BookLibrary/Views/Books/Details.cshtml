@@ -28,7 +28,7 @@ else
             <li class="list-group-item">
                 <strong>Rating:</strong> @review.Rating / 5 <br />
                 <small class="text-muted">
-                    @review.CreatedOn.ToShortDateString()
+                    @review.CreatedOn.ToString("dd.MM.yyyy")
                 </small>
                 <p class="mb-0">@review.Comment</p>
             </li>

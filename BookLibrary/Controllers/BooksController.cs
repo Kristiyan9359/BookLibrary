@@ -29,7 +29,11 @@ public class BooksController : Controller
                 Author = b.Author.FirstName + " " + b.Author.LastName,
                 Genre = b.Genre.Name,
                 Pages = b.Pages,
-                Year = b.Year
+                Year = b.Year,
+                ReviewsCount = b.Reviews.Count,
+                AverageRating = b.Reviews.Any()
+            ? b.Reviews.Average(r => r.Rating)
+            : (double?)null
             })
             .ToList();
 

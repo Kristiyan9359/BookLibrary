@@ -18,6 +18,7 @@
             <th>Year</th>
             <th>Genre</th>
             <th>Pages</th>
+            <th>Rating</th>
             <th></th>
         </tr>
     </thead>
@@ -31,7 +32,24 @@
                 <td>@book.Genre</td>
                 <td>@book.Pages</td>
                 <td>
-                    <a asp-action="Details" asp-route-id="@book.Id">
+                    @if (book.AverageRating.HasValue)
+                    {
+                        <span class="badge bg-success">
+                            @book.AverageRating.Value.ToString("0.0")
+                            <small>(@book.ReviewsCount)</small>
+                        </span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">
+                            No reviews
+                        </span>
+                    }
+                </td>
+                <td>
+                    <a asp-action="Details"
+                       asp-route-id="@book.Id"
+                       class="btn btn-sm btn-primary">
                         Details
                     </a>
                 </td>
