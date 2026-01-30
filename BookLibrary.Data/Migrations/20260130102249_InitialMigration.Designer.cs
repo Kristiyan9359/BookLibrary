@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookLibrary.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260123131830_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20260130102249_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -38,19 +38,91 @@ namespace BookLibrary.Data.Migrations
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CountryId");
 
                     b.ToTable("Authors");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CountryId = 2,
+                            FirstName = "George",
+                            LastName = "Orwell"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CountryId = 1,
+                            FirstName = "J.K.",
+                            LastName = "Rowling"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CountryId = 1,
+                            FirstName = "Agatha",
+                            LastName = "Christie"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CountryId = 5,
+                            FirstName = "Fyodor",
+                            LastName = "Dostoevsky"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CountryId = 2,
+                            FirstName = "Ernest",
+                            LastName = "Hemingway"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CountryId = 1,
+                            FirstName = "J.R.R.",
+                            LastName = "Tolkien"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CountryId = 6,
+                            FirstName = "Haruki",
+                            LastName = "Murakami"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CountryId = 7,
+                            FirstName = "Umberto",
+                            LastName = "Eco"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            CountryId = 3,
+                            FirstName = "Victor",
+                            LastName = "Hugo"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            CountryId = 8,
+                            FirstName = "Carlos",
+                            LastName = "Ruiz Zafón"
+                        });
                 });
 
             modelBuilder.Entity("BookLibrary.Data.Models.Book", b =>
@@ -74,6 +146,9 @@ namespace BookLibrary.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
+
+                    b.Property<int>("Year")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -100,6 +175,48 @@ namespace BookLibrary.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Countries");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "United Kingdom"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "United States"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "France"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Germany"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Russia"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Japan"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Name = "Italy"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Name = "Spain"
+                        });
                 });
 
             modelBuilder.Entity("BookLibrary.Data.Models.Genre", b =>
@@ -118,6 +235,48 @@ namespace BookLibrary.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Genres");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Fantasy"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Science Fiction"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Mystery"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Thriller"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Historical"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Romance"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Name = "Horror"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Name = "Non-Fiction"
+                        });
                 });
 
             modelBuilder.Entity("BookLibrary.Data.Models.Review", b =>
@@ -132,7 +291,6 @@ namespace BookLibrary.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Comment")
-                        .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 

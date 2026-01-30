@@ -16,11 +16,11 @@ public class Review
     public Book Book { get; set; } = null!;
 
     [Required]
-    [MaxLength(ReviewCommentMaxLength)]
-    public string Comment { get; set; } = null!;
-
     [Range(ReviewMinRating, ReviewMaxRating)]
     public int Rating { get; set; }
+    
+    [MaxLength(ReviewCommentMaxLength)]
+    public string? Comment { get; set; }
 
     public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
 }

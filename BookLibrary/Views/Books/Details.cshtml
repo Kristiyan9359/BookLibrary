@@ -27,25 +27,59 @@ else
         {
             <li class="list-group-item">
                 <strong>Rating:</strong> @review.Rating / 5 <br />
-                <small>@review.CreatedOn.ToShortDateString()</small>
-                <p>@review.Comment</p>
+                <small class="text-muted">
+                    @review.CreatedOn.ToShortDateString()
+                </small>
+                <p class="mb-0">@review.Comment</p>
             </li>
         }
     </ul>
 }
-<div class="mt-3">
+
+<hr />
+
+<h4>Add Review</h4>
+
+<form asp-controller="Reviews" asp-action="Add" method="post">
+    <input type="hidden" name="BookId" value="@Model.Id" />
+
+    <div class="mb-3">
+        <label class="form-label">Rating</label>
+        <select name="Rating" class="form-select">
+            <option value="">-- Select rating --</option>
+            @for (int i = 1; i <= 5; i++)
+            {
+                <option value="@i">@i</option>
+            }
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Comment</label>
+        <textarea name="Comment"
+                  class="form-control"
+                  rows="3"
+                  placeholder="Optional comment..."></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-success">
+        ➕ Add review
+    </button>
+</form>
+
+<div class="mt-4">
     <a asp-action="Edit"
        asp-route-id="@Model.Id"
        class="btn btn-warning me-2">
-         Edit
+        Edit
     </a>
     <a asp-action="Delete"
        asp-route-id="@Model.Id"
-       class="btn btn-danger">
+       class="btn btn-danger me-2">
         Delete
     </a>
     <a asp-action="Index"
        class="btn btn-secondary">
-         Back to list
+        Back to list
     </a>
 </div>
