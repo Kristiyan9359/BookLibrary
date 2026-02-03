@@ -10,6 +10,7 @@ public class BookDetailsViewModel
     public string Genre { get; set; } = null!;
     public int Year { get; set; }
     public int Pages { get; set; }
+    public bool IsOwner { get; set; }
 
     public IEnumerable<BookReviewViewModel> Reviews { get; set; }
         = new List<BookReviewViewModel>();

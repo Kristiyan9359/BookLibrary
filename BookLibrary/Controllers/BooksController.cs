@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 [Authorize]
 public class BooksController : Controller
@@ -97,13 +98,16 @@ public class BooksController : Controller
             return View(model);
         }
 
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
         var book = new Book
         {
             Title = model.Title,
             Pages = model.Pages,
             Year = model.Year,
             AuthorId = model.AuthorId,
-            GenreId = model.GenreId
+            GenreId = model.GenreId,
+            OwnerId = userId!
         };
 
         context.Books.Add(book);
@@ -129,6 +133,8 @@ public class BooksController : Controller
             return NotFound();
         }
 
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
         var model = new BookDetailsViewModel
         {
             Id = book.Id,
@@ -146,7 +152,9 @@ public class BooksController : Controller
                     Rating = r.Rating,
                     CreatedOn = r.CreatedOn
                 })
-                .ToList()
+                .ToList(),
+
+                IsOwner = book.OwnerId == userId
         };
 
         return View(model);
@@ -157,7 +165,18 @@ public class BooksController : Controller
     public IActionResult Edit(int id)
     {
         var book = context.Books.FirstOrDefault(b => b.Id == id);
-        if (book == null) return NotFound();
+
+        if (book == null)
+        {
+            return NotFound();
+        }
+
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        if (book.OwnerId != userId)
+        {
+            return Forbid();
+        }
 
         var model = new BookEditViewModel
         {
@@ -224,6 +243,13 @@ public class BooksController : Controller
         book.AuthorId = model.AuthorId;
         book.GenreId = model.GenreId;
 
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        if (book.OwnerId != userId)
+        {
+            return Forbid();
+        }
+
         context.SaveChanges();
 
         TempData["SuccessMessage"] = "Book was updated successfully.";
@@ -243,6 +269,13 @@ public class BooksController : Controller
             return NotFound();
         }
 
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        if (book.OwnerId != userId)
+        {
+            return Forbid();
+        }
+
         return View(book);
     }
 
@@ -255,6 +288,13 @@ public class BooksController : Controller
         if (book == null)
         {
             return NotFound();
+        }
+
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        if (book.OwnerId != userId)
+        {
+            return Forbid();
         }
 
         context.Books.Remove(book);

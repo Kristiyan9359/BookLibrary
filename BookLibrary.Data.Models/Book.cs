@@ -1,5 +1,6 @@
 ﻿namespace BookLibrary.Data.Models;
 
+using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using static BookLibrary.Common.ValidationConstants;
@@ -27,6 +28,9 @@ public class Book
     [ForeignKey(nameof(Genre))]
     public int GenreId { get; set; }
     public Genre Genre { get; set; } = null!;
+
+    public string OwnerId { get; set; } = null!;
+    public IdentityUser Owner { get; set; } = null!;
 
     public virtual ICollection<Review> Reviews { get; set; }
         = new HashSet<Review>();
