@@ -3,10 +3,12 @@
 using BookLibrary.Data;
 using BookLibrary.Data.Models;
 using BookLibrary.ViewModels.Books;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
+[Authorize]
 public class BooksController : Controller
 {
     private readonly ApplicationDbContext context;
