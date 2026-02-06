@@ -126,6 +126,7 @@ public class BooksController : Controller
             .ThenInclude(a => a.Country)
             .Include(b => b.Genre)
             .Include(b => b.Reviews)
+            .Include(b => b.Favorites)
             .FirstOrDefault(b => b.Id == id);
 
         if (book == null)
@@ -148,13 +149,16 @@ public class BooksController : Controller
                 .OrderByDescending(r => r.CreatedOn)
                 .Select(r => new BookReviewViewModel
                 {
-                    Comment = r.Comment,
+                    Comment = r.Comment ?? string.Empty,
                     Rating = r.Rating,
                     CreatedOn = r.CreatedOn
                 })
                 .ToList(),
 
-                IsOwner = book.OwnerId == userId
+                IsOwner = book.OwnerId == userId,
+
+                IsFavorite = userId != null &&
+                     book.Favorites.Any(f => f.UserId == userId)
         };
 
         return View(model);

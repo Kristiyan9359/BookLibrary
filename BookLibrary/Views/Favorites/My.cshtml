@@ -1,0 +1,32 @@
+﻿@model IEnumerable<BookLibrary.ViewModels.Favorites.FavoriteBookViewModel>
+
+@{
+    ViewData["Title"] = "My Favorites";
+}
+
+<h2>My Favorite Books</h2>
+
+@if (!Model.Any())
+{
+    <p>You have not added any books to your favorites yet.</p>
+}
+else
+{
+    <ul class="list-group">
+        @foreach (var book in Model)
+        {
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span>
+                    <strong>@book.Title</strong> by @book.Author
+                </span>
+
+                <a asp-controller="Books"
+                   asp-action="Details"
+                   asp-route-id="@book.Id"
+                   class="btn btn-sm btn-outline-primary">
+                    View
+                </a>
+            </li>
+        }
+    </ul>
+}

@@ -11,7 +11,7 @@ public class BookDetailsViewModel
     public int Year { get; set; }
     public int Pages { get; set; }
     public bool IsOwner { get; set; }
-
+    public bool IsFavorite { get; set; }
     public IEnumerable<BookReviewViewModel> Reviews { get; set; }
-        = new List<BookReviewViewModel>();
+            = new List<BookReviewViewModel>();
 }

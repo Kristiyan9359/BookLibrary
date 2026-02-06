@@ -68,6 +68,19 @@ else
             ➕ Add review
         </button>
     </form>
+
+    <form asp-controller="Favorites"
+          asp-action="Toggle"
+          method="post"
+          class="mt-3">
+
+        <input type="hidden" name="bookId" value="@Model.Id" />
+
+        <button type="submit"
+                class="btn @(Model.IsFavorite ? "btn-outline-danger" : "btn-outline-primary")">
+            @(Model.IsFavorite ? "💔 Remove from favorites" : "❤️ Add to favorites")
+        </button>
+    </form>
 }
 
 <div class="mt-4">
