@@ -34,4 +34,7 @@ public class Book
 
     public virtual ICollection<Review> Reviews { get; set; }
         = new HashSet<Review>();
+
+    public virtual ICollection<Favorite> Favorites { get; set; }
+        = new HashSet<Favorite>();
 }
