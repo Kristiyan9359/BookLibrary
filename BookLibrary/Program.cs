@@ -1,8 +1,9 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+
 using BookLibrary.Data;
 using BookLibrary.Services.Core;
 using BookLibrary.Services.Core.Contracts;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +24,8 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 .AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddScoped<IBookService, BookService>();
+
+builder.Services.AddScoped<IReviewService, ReviewService>();
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 

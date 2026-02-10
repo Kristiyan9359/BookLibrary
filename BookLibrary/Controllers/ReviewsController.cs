@@ -1,43 +1,33 @@
 ﻿namespace BookLibrary.Web.Controllers;
 
-using BookLibrary.Data;
-using BookLibrary.Data.Models;
-using BookLibrary.ViewModels.Books;
 using Microsoft.AspNetCore.Mvc;
+
+using BookLibrary.Services.Core.Contracts;
+using BookLibrary.ViewModels.Books;
 
 public class ReviewsController : Controller
 {
-    private readonly ApplicationDbContext context;
+    private readonly IReviewService reviewService;
 
-    public ReviewsController(ApplicationDbContext context)
+    public ReviewsController(IReviewService reviewService)
     {
-        this.context = context;
+        this.reviewService = reviewService;
     }
 
     [HttpPost]
-    public IActionResult Add(ReviewCreateViewModel model)
+    public async Task<IActionResult> Add(ReviewCreateViewModel model)
     {
-        var bookExists = context.Books.Any(b => b.Id == model.BookId);
-        if (!bookExists)
-        {
-            return NotFound();
-        }
-
         if (!ModelState.IsValid)
         {
             return RedirectToAction("Details", "Books", new { id = model.BookId });
         }
 
-        var review = new Review
-        {
-            BookId = model.BookId,
-            Rating = model.Rating,
-            Comment = model.Comment,
-            CreatedOn = DateTime.UtcNow
-        };
+        var success = await reviewService.AddAsync(model);
 
-        context.Reviews.Add(review);
-        context.SaveChanges();
+        if (!success)
+        {
+            return NotFound();
+        }
 
         TempData["SuccessMessage"] = "Review added successfully.";
 
