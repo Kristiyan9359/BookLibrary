@@ -1,311 +1,157 @@
 ﻿namespace BookLibrary.Web.Controllers;
 
-using BookLibrary.Data;
-using BookLibrary.Data.Models;
+using BookLibrary.Services.Core.Contracts;
 using BookLibrary.ViewModels.Books;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
 [Authorize]
 public class BooksController : Controller
 {
-    private readonly ApplicationDbContext context;
+    private readonly IBookService bookService;
 
-    public BooksController(ApplicationDbContext context)
+    public BooksController(IBookService bookService)
     {
-        this.context = context;
+        this.bookService = bookService;
     }
 
     [HttpGet]
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
-        var books = context.Books
-            .Include(b => b.Author)
-            .Include(b => b.Genre)
-            .Select(b => new BookIndexViewModel
-            {
-                Id = b.Id,
-                Title = b.Title,
-                Author = b.Author.FirstName + " " + b.Author.LastName,
-                Genre = b.Genre.Name,
-                Pages = b.Pages,
-                Year = b.Year,
-                ReviewsCount = b.Reviews.Count,
-                AverageRating = b.Reviews.Any()
-            ? b.Reviews.Average(r => r.Rating)
-            : (double?)null
-            })
-            .ToList();
-
+        var books = await bookService.GetAllAsync();
         return View(books);
     }
 
     [HttpGet]
-    public IActionResult Create()
+    public async Task<IActionResult> Details(int id)
     {
-        var model = new BookCreateViewModel
-        {
-            Authors = context.Authors
-                .OrderBy(a => a.LastName)
-                .ThenBy(a => a.FirstName)
-                .Select(a => new SelectListItem
-                {
-                    Value = a.Id.ToString(),
-                    Text = a.FirstName + " " + a.LastName
-                })
-                .ToList(),
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            Genres = context.Genres
-                .OrderBy(g => g.Name)
-                .Select(g => new SelectListItem
-                {
-                    Value = g.Id.ToString(),
-                    Text = g.Name
-                })
-                .ToList()
-        };
+        var model = await bookService.GetDetailsAsync(id, userId);
+
+        if (model == null)
+        {
+            return NotFound();
+        }
 
         return View(model);
     }
 
+    [HttpGet]
+    public async Task<IActionResult> Create()
+    {
+        var model = await bookService.GetCreateModelAsync();
+        return View(model);
+    }
+
     [HttpPost]
-    public IActionResult Create(BookCreateViewModel model)
+    public async Task<IActionResult> Create(BookCreateViewModel model)
     {
         if (!ModelState.IsValid)
         {
-            model.Authors = context.Authors
-                .OrderBy(a => a.LastName)
-                .ThenBy(a => a.FirstName)
-                .Select(a => new SelectListItem
-                {
-                    Value = a.Id.ToString(),
-                    Text = a.FirstName + " " + a.LastName
-                })
-                .ToList();
-
-            model.Genres = context.Genres
-                .OrderBy(g => g.Name)
-                .Select(g => new SelectListItem
-                {
-                    Value = g.Id.ToString(),
-                    Text = g.Name
-                })
-                .ToList();
-
+            model = await bookService.GetCreateModelAsync();
             return View(model);
         }
 
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
 
-        var book = new Book
+        try
         {
-            Title = model.Title,
-            Pages = model.Pages,
-            Year = model.Year,
-            AuthorId = model.AuthorId,
-            GenreId = model.GenreId,
-            OwnerId = userId!
-        };
-
-        context.Books.Add(book);
-        context.SaveChanges();
+            await bookService.CreateAsync(model, userId);
+        }
+        catch (Exception)
+        {
+            ModelState.AddModelError(string.Empty, "Unexpected error while creating the book.");
+            model = await bookService.GetCreateModelAsync();
+            return View(model);
+        }
 
         TempData["SuccessMessage"] = "Book was created successfully.";
-
-        return RedirectToAction(nameof(Details), new { id = book.Id });
+        return RedirectToAction(nameof(Index));
     }
 
     [HttpGet]
-    public IActionResult Details(int id)
+    public async Task<IActionResult> Edit(int id)
     {
-        var book = context.Books
-            .Include(b => b.Author)
-            .ThenInclude(a => a.Country)
-            .Include(b => b.Genre)
-            .Include(b => b.Reviews)
-            .Include(b => b.Favorites)
-            .FirstOrDefault(b => b.Id == id);
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
 
-        if (book == null)
-        {
-            return NotFound();
-        }
+        var model = await bookService.GetEditModelAsync(id, userId);
 
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-        var model = new BookDetailsViewModel
-        {
-            Id = book.Id,
-            Title = book.Title,
-            Pages = book.Pages,
-            Year = book.Year,
-            Author = $"{book.Author.FirstName} {book.Author.LastName}",
-            Country = book.Author.Country.Name,
-            Genre = book.Genre.Name,
-            Reviews = book.Reviews
-                .OrderByDescending(r => r.CreatedOn)
-                .Select(r => new BookReviewViewModel
-                {
-                    Comment = r.Comment ?? string.Empty,
-                    Rating = r.Rating,
-                    CreatedOn = r.CreatedOn
-                })
-                .ToList(),
-
-                IsOwner = book.OwnerId == userId,
-
-                IsFavorite = userId != null &&
-                     book.Favorites.Any(f => f.UserId == userId)
-        };
-
-        return View(model);
-    }
-
-
-    [HttpGet]
-    public IActionResult Edit(int id)
-    {
-        var book = context.Books.FirstOrDefault(b => b.Id == id);
-
-        if (book == null)
-        {
-            return NotFound();
-        }
-
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-        if (book.OwnerId != userId)
+        if (model == null)
         {
             return Forbid();
         }
 
-        var model = new BookEditViewModel
-        {
-            Id = book.Id,
-            Title = book.Title,
-            Pages = book.Pages,
-            Year = book.Year,
-            AuthorId = book.AuthorId,
-            GenreId = book.GenreId,
-            Authors = context.Authors
-                .OrderBy(a => a.LastName)
-                .Select(a => new SelectListItem
-                {
-                    Value = a.Id.ToString(),
-                    Text = a.FirstName + " " + a.LastName
-                })
-                .ToList(),
-            Genres = context.Genres
-                .OrderBy(g => g.Name)
-                .Select(g => new SelectListItem
-                {
-                    Value = g.Id.ToString(),
-                    Text = g.Name
-                })
-                .ToList()
-        };
-
         return View(model);
     }
 
-
     [HttpPost]
-    public IActionResult Edit(BookEditViewModel model)
+    public async Task<IActionResult> Edit(int id, BookEditViewModel model)
     {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+
         if (!ModelState.IsValid)
         {
-            model.Authors = context.Authors
-                .OrderBy(a => a.LastName)
-                .Select(a => new SelectListItem
-                {
-                    Value = a.Id.ToString(),
-                    Text = a.FirstName + " " + a.LastName
-                })
-                .ToList();
+            var fullModel = await bookService.GetEditModelAsync(id, userId);
 
-            model.Genres = context.Genres
-                .OrderBy(g => g.Name)
-                .Select(g => new SelectListItem
-                {
-                    Value = g.Id.ToString(),
-                    Text = g.Name
-                })
-                .ToList();
+            if (fullModel == null)
+            {
+                return Forbid();
+            }
 
-            return View(model);
+            fullModel.Title = model.Title;
+            fullModel.Year = model.Year;
+            fullModel.Pages = model.Pages;
+            fullModel.AuthorId = model.AuthorId;
+            fullModel.GenreId = model.GenreId;
+
+            return View(fullModel);
         }
 
-        var book = context.Books.Find(model.Id);
-        if (book == null) return NotFound();
-
-        book.Title = model.Title;
-        book.Pages = model.Pages;
-        book.Year = model.Year;
-        book.AuthorId = model.AuthorId;
-        book.GenreId = model.GenreId;
-
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-        if (book.OwnerId != userId)
+        try
         {
-            return Forbid();
+            await bookService.UpdateAsync(id, model, userId);
         }
 
-        context.SaveChanges();
+        catch
+        {
+            ModelState.AddModelError(string.Empty, "Unexpected error.");
+            var fullModel = await bookService.GetEditModelAsync(id, userId);
+            return View(fullModel);
+        }
 
         TempData["SuccessMessage"] = "Book was updated successfully.";
-        return RedirectToAction(nameof(Details), new { id = book.Id });
+        return RedirectToAction(nameof(Details), new { id });
     }
 
     [HttpGet]
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
-        var book = context.Books
-            .Include(b => b.Author)
-            .Include(b => b.Genre)
-            .FirstOrDefault(b => b.Id == id);
-
-        if (book == null)
+        if (!await bookService.ExistsAsync(id))
         {
             return NotFound();
         }
 
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-        if (book.OwnerId != userId)
-        {
-            return Forbid();
-        }
-
-        return View(book);
+        return View(id);
     }
 
-
     [HttpPost]
-    public IActionResult DeleteConfirmed(int id)
+    public async Task<IActionResult> DeleteConfirmed(int id)
     {
-        var book = context.Books.Find(id);
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
 
-        if (book == null)
+        try
         {
-            return NotFound();
+            await bookService.DeleteAsync(id, userId);
         }
 
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-        if (book.OwnerId != userId)
+        catch (Exception)
         {
-            return Forbid();
+            return BadRequest();
         }
-
-        context.Books.Remove(book);
-        context.SaveChanges();
 
         TempData["SuccessMessage"] = "Book was deleted successfully.";
-
         return RedirectToAction(nameof(Index));
     }
 }

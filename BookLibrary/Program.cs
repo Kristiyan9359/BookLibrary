@@ -1,4 +1,6 @@
 using BookLibrary.Data;
+using BookLibrary.Services.Core;
+using BookLibrary.Services.Core.Contracts;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,6 +21,8 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
     options.Password.RequireUppercase = false;
 })
 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+builder.Services.AddScoped<IBookService, BookService>();
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
