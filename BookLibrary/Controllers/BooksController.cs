@@ -2,12 +2,9 @@
 
 using BookLibrary.Services.Core.Contracts;
 using BookLibrary.ViewModels.Books;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
-[Authorize]
-public class BooksController : Controller
+public class BooksController : BaseController
 {
     private readonly IBookService bookService;
 
@@ -26,7 +23,7 @@ public class BooksController : Controller
     [HttpGet]
     public async Task<IActionResult> Details(int id)
     {
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var userId = GetUserId();
 
         var model = await bookService.GetDetailsAsync(id, userId);
 
@@ -41,7 +38,7 @@ public class BooksController : Controller
     [HttpGet]
     public async Task<IActionResult> Create()
     {
-        var model = await bookService.GetCreateModelAsync();
+        var model = await bookService.GetCreateAsync();
         return View(model);
     }
 
@@ -50,11 +47,11 @@ public class BooksController : Controller
     {
         if (!ModelState.IsValid)
         {
-            model = await bookService.GetCreateModelAsync();
+            model = await bookService.GetCreateAsync();
             return View(model);
         }
 
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+        var userId = GetUserId()!;
 
         try
         {
@@ -63,7 +60,7 @@ public class BooksController : Controller
         catch (Exception)
         {
             ModelState.AddModelError(string.Empty, "Unexpected error while creating the book.");
-            model = await bookService.GetCreateModelAsync();
+            model = await bookService.GetCreateAsync();
             return View(model);
         }
 
@@ -74,9 +71,9 @@ public class BooksController : Controller
     [HttpGet]
     public async Task<IActionResult> Edit(int id)
     {
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+        var userId = GetUserId()!;
 
-        var model = await bookService.GetEditModelAsync(id, userId);
+        var model = await bookService.GetEditAsync(id, userId);
 
         if (model == null)
         {
@@ -89,11 +86,11 @@ public class BooksController : Controller
     [HttpPost]
     public async Task<IActionResult> Edit(int id, BookEditViewModel model)
     {
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+        var userId = GetUserId()!;
 
         if (!ModelState.IsValid)
         {
-            var fullModel = await bookService.GetEditModelAsync(id, userId);
+            var fullModel = await bookService.GetEditAsync(id, userId);
 
             if (fullModel == null)
             {
@@ -111,13 +108,13 @@ public class BooksController : Controller
 
         try
         {
-            await bookService.UpdateAsync(id, model, userId);
+            await bookService.EditAsync(id, model, userId);
         }
 
         catch
         {
             ModelState.AddModelError(string.Empty, "Unexpected error.");
-            var fullModel = await bookService.GetEditModelAsync(id, userId);
+            var fullModel = await bookService.GetEditAsync(id, userId);
             return View(fullModel);
         }
 
@@ -128,18 +125,22 @@ public class BooksController : Controller
     [HttpGet]
     public async Task<IActionResult> Delete(int id)
     {
-        if (!await bookService.ExistsAsync(id))
+        var userId = GetUserId()!;
+
+        var model = await bookService.GetDeleteAsync(id, userId);
+
+        if (model == null)
         {
-            return NotFound();
+            return Forbid();
         }
 
-        return View(id);
+        return View(model);
     }
 
     [HttpPost]
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+        var userId = GetUserId()!;
 
         try
         {

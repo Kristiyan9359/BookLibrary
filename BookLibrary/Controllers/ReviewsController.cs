@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using BookLibrary.Services.Core.Contracts;
 using BookLibrary.ViewModels.Books;
 
-public class ReviewsController : Controller
+public class ReviewsController : BaseController
 {
     private readonly IReviewService reviewService;
 

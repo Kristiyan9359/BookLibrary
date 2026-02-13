@@ -1,4 +1,4 @@
-﻿@model int
+﻿@model BookLibrary.ViewModels.Books.BookDeleteViewModel
 
 @{
     ViewData["Title"] = "Delete Book";
@@ -11,7 +11,7 @@
 </div>
 
 <form asp-action="DeleteConfirmed" method="post">
-    <input type="hidden" name="id" value="@Model" />
+    <input type="hidden" name="id" value="@Model.Id" />
 
     <button type="submit" class="btn btn-danger">
         Delete

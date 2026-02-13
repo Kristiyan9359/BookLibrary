@@ -78,7 +78,7 @@ public class BookService : IBookService
         };
     }
 
-    public async Task<BookCreateViewModel> GetCreateModelAsync()
+    public async Task<BookCreateViewModel> GetCreateAsync()
     {
         return new BookCreateViewModel
         {
@@ -116,7 +116,7 @@ public class BookService : IBookService
         await context.SaveChangesAsync();
     }
 
-    public async Task<BookEditViewModel?> GetEditModelAsync(int id, string userId)
+    public async Task<BookEditViewModel?> GetEditAsync(int id, string userId)
     {
         var book = await context.Books.FindAsync(id);
 
@@ -151,7 +151,7 @@ public class BookService : IBookService
         };
     }
 
-    public async Task UpdateAsync(int id, BookEditViewModel model, string userId)
+    public async Task EditAsync(int id, BookEditViewModel model, string userId)
     {
         var book = await context.Books.FindAsync(id);
 
@@ -169,9 +169,30 @@ public class BookService : IBookService
         await context.SaveChangesAsync();
     }
 
-    public async Task<bool> ExistsAsync(int id)
+    public async Task<BookDeleteViewModel?> GetDeleteAsync(int id, string userId)
     {
-        return await context.Books.AnyAsync(b => b.Id == id);
+        var book = await context.Books
+            .Include(b => b.Author)
+            .Include(b => b.Genre)
+            .FirstOrDefaultAsync(b => b.Id == id);
+
+        if (book == null)
+        {
+            return null;
+        }
+
+        if (book.OwnerId != userId)
+        {
+            return null;
+        }
+
+        return new BookDeleteViewModel
+        {
+            Id = book.Id,
+            Title = book.Title,
+            Author = book.Author.FirstName + " " + book.Author.LastName,
+            Genre = book.Genre.Name
+        };
     }
 
     public async Task DeleteAsync(int id, string userId)

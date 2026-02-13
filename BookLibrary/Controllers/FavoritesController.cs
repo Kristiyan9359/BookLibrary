@@ -6,8 +6,7 @@ using System.Security.Claims;
 
 using BookLibrary.Services.Core.Contracts;
 
-[Authorize]
-public class FavoritesController : Controller
+public class FavoritesController : BaseController
 {
     private readonly IFavoriteService favoriteService;
 
@@ -19,7 +18,7 @@ public class FavoritesController : Controller
     [HttpPost]
     public async Task<IActionResult> Toggle(int bookId)
     {
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+        var userId = GetUserId()!;
 
         var result = await favoriteService.ToggleAsync(bookId, userId);
 
@@ -38,7 +37,7 @@ public class FavoritesController : Controller
     [HttpGet]
     public async Task<IActionResult> My()
     {
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+        var userId = GetUserId()!;
 
         var favorites = await favoriteService.GetUserFavoritesAsync(userId);
 
