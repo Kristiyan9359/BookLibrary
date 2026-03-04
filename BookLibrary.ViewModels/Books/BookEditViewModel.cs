@@ -9,7 +9,7 @@ namespace BookLibrary.ViewModels.Books
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Title is required.")]
-        [MinLength(2, ErrorMessage = "Title must be at least 2 characters long.")]
+        [MinLength(BookTitleMinLength, ErrorMessage = "Title must be at least 2 characters long.")]
         [MaxLength(BookTitleMaxLength)]
         public string Title { get; set; } = null!;
 

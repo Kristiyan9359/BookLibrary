@@ -1,0 +1,34 @@
+﻿@model BookLibrary.ViewModels.Authors.AuthorDeleteViewModel
+
+@{
+    ViewData["Title"] = "Delete Author";
+}
+
+<h2 class="text-center text-danger">@ViewData["Title"]</h2>
+<hr />
+
+<div class="alert alert-warning text-center">
+    Are you sure you want to delete this author?
+</div>
+
+<div class="card">
+    <div class="card-body">
+
+        <p><strong>First Name:</strong> @Model.FirstName</p>
+        <p><strong>Last Name:</strong> @Model.LastName</p>
+        <p><strong>Country:</strong> @Model.Country</p>
+
+        <form asp-action="DeleteConfirmed" method="post">
+            <input type="hidden" asp-for="Id" />
+
+            <button type="submit" class="btn btn-danger">
+                Delete
+            </button>
+
+            <a asp-action="Index" class="btn btn-secondary">
+                Cancel
+            </a>
+        </form>
+
+    </div>
+</div>

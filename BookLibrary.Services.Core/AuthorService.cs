@@ -57,4 +57,70 @@ public class AuthorService : IAuthorService
         await context.Authors.AddAsync(author);
         await context.SaveChangesAsync();
     }
+
+    public async Task<AuthorEditViewModel?> GetEditAsync(int id)
+    {
+        Author? author = await context.Authors
+            .FirstOrDefaultAsync(a => a.Id == id);
+
+        if (author == null)
+            return null;
+
+        AuthorEditViewModel model = new AuthorEditViewModel
+        {
+            Id = author.Id,
+            FirstName = author.FirstName,
+            LastName = author.LastName,
+            CountryId = author.CountryId,
+            Countries = await context.Countries
+                .Select(c => new SelectListItem
+                {
+                    Value = c.Id.ToString(),
+                    Text = c.Name
+                })
+                .ToListAsync()
+        };
+
+        return model;
+    }
+
+    public async Task EditAsync(int id, AuthorEditViewModel model)
+    {
+        Author author = await context.Authors
+            .FirstAsync(a => a.Id == id);
+
+        author.FirstName = model.FirstName;
+        author.LastName = model.LastName;
+        author.CountryId = model.CountryId;
+
+        await context.SaveChangesAsync();
+    }
+
+    public async Task<AuthorDeleteViewModel?> GetDeleteAsync(int id)
+    {
+        Author? author = await context.Authors
+            .Include(a => a.Country)
+            .FirstOrDefaultAsync(a => a.Id == id);
+
+        if (author == null)
+            return null;
+
+        return new AuthorDeleteViewModel
+        {
+            Id = author.Id,
+            FirstName = author.FirstName,
+            LastName = author.LastName,
+            Country = author.Country.Name
+        };
+    }
+
+    public async Task DeleteAsync(int id)
+    {
+        Author author = await context.Authors
+            .FirstAsync(a => a.Id == id);
+
+        context.Authors.Remove(author);
+
+        await context.SaveChangesAsync();
+    }
 }

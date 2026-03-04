@@ -29,6 +29,8 @@ builder.Services.AddScoped<IReviewService, ReviewService>();
 
 builder.Services.AddScoped<IFavoriteService, FavoriteService>();
 
+builder.Services.AddScoped<IAuthorService, AuthorService>();
+
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddControllersWithViews();
