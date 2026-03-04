@@ -117,7 +117,13 @@ public class AuthorService : IAuthorService
     public async Task DeleteAsync(int id)
     {
         Author author = await context.Authors
+            .Include(a => a.Books)
             .FirstAsync(a => a.Id == id);
+
+        if (author.Books.Any())
+        {
+            throw new InvalidOperationException("Cannot delete author with books.");
+        }
 
         context.Authors.Remove(author);
 

@@ -119,8 +119,12 @@ public class AuthorsController : BaseController
         {
             await authorService.DeleteAsync(id);
         }
-
-        catch (Exception)
+        catch (InvalidOperationException ex)
+        {
+            TempData["ErrorMessage"] = ex.Message;
+            return RedirectToAction(nameof(Index));
+        }
+        catch
         {
             return BadRequest();
         }

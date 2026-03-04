@@ -68,6 +68,12 @@
             @TempData["SuccessMessage"]
         </div>
     }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger text-center mb-0">
+            @TempData["ErrorMessage"]
+        </div>
+    }
 
     <main class="container flex-fill">
         <div class="pb-3">
