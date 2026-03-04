@@ -1,0 +1,32 @@
+﻿@model IEnumerable<BookLibrary.ViewModels.Authors.AuthorIndexViewModel>
+
+@{
+    ViewData["Title"] = "Authors";
+}
+
+<h2 class="text-center">@ViewData["Title"]</h2>
+<hr />
+
+<div class="mb-3">
+    <a asp-action="Create" class="btn btn-success">Add Author</a>
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Country</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var author in Model)
+        {
+            <tr>
+                <td>@author.FirstName</td>
+                <td>@author.LastName</td>
+                <td>@author.Country</td>
+            </tr>
+        }
+    </tbody>
+</table>

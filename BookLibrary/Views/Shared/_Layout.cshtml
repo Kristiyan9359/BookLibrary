@@ -43,21 +43,15 @@
                         @if (User.Identity?.IsAuthenticated == true)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-white"
-                                   asp-controller="Books"
-                                   asp-action="Index">
-                                    Books
-                                </a>
+                                <a class="nav-link text-white" asp-controller="Books" asp-action="Index">Books</a>
                             </li>
-                        }
-                        @if (User.Identity?.IsAuthenticated == true)
-                        {
+
                             <li class="nav-item">
-                                <a class="nav-link text-white"
-                                   asp-controller="Favorites"
-                                   asp-action="My">
-                                    ❤️ My Favorites
-                                </a>
+                                <a class="nav-link text-white" asp-controller="Authors" asp-action="Index">Authors</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-controller="Favorites" asp-action="My">❤️ My Favorites</a>
                             </li>
                         }
                     </ul>
