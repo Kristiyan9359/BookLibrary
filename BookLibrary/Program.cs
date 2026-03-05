@@ -33,6 +33,8 @@ builder.Services.AddScoped<IAuthorService, AuthorService>();
 
 builder.Services.AddScoped<ICountryService, CountryService>();
 
+builder.Services.AddScoped<IGenreService, GenreService>();
+
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddControllersWithViews();

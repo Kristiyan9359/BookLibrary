@@ -125,6 +125,11 @@ public class AuthorService : IAuthorService
             throw new InvalidOperationException("Cannot delete author with books.");
         }
 
+        if (author == null)
+        {
+            throw new InvalidOperationException("Author not found.");
+        }
+
         context.Authors.Remove(author);
 
         await context.SaveChangesAsync();

@@ -6,7 +6,7 @@ using static BookLibrary.Common.ValidationConstants;
 public class CountryCreateViewModel
 {
     [Required(ErrorMessage = "Country name is required")]
-    [MinLength(CountryNameMinLength)]
+    [MinLength(CountryNameMinLength, ErrorMessage = "Country name must be at least 2 characters long.")]
     [MaxLength(CountryNameMaxLength)]
     public string Name { get; set; } = null!;
 }
