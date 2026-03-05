@@ -31,6 +31,8 @@ builder.Services.AddScoped<IFavoriteService, FavoriteService>();
 
 builder.Services.AddScoped<IAuthorService, AuthorService>();
 
+builder.Services.AddScoped<ICountryService, CountryService>();
+
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddControllersWithViews();
