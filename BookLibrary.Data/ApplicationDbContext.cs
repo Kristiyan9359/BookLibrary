@@ -42,6 +42,12 @@ public class ApplicationDbContext : IdentityDbContext
             .HasForeignKey(a => a.CountryId)
             .OnDelete(DeleteBehavior.Restrict);
 
+        modelBuilder.Entity<Book>()
+            .HasOne(b => b.Genre)
+            .WithMany(g => g.Books)
+            .HasForeignKey(b => b.GenreId)
+            .OnDelete(DeleteBehavior.Restrict);
+
         modelBuilder.Entity<Favorite>()
             .HasKey(f => new { f.BookId, f.UserId });
 
