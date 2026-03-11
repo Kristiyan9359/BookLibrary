@@ -14,6 +14,48 @@
     <li class="list-group-item"><strong>Pages:</strong> @Model.Pages</li>
 </ul>
 
+@if (User.Identity?.IsAuthenticated == true)
+{
+    <div class="mb-3">
+
+        @if (!Model.IsRented)
+        {
+            <form asp-controller="BookRental"
+                  asp-action="Rent"
+                  method="post">
+
+                <input type="hidden" name="bookId" value="@Model.Id" />
+
+                <button class="btn btn-success">
+                    📚 Rent Book
+                </button>
+
+            </form>
+        }
+        else if (Model.IsRentedByCurrentUser)
+        {
+            <form asp-controller="BookRental"
+                  asp-action="Return"
+                  method="post">
+
+                <input type="hidden" name="bookId" value="@Model.Id" />
+
+                <button class="btn btn-warning">
+                    ↩ Return Book
+                </button>
+
+            </form>
+        }
+        else
+        {
+            <span class="badge bg-danger">
+                Book is currently rented
+            </span>
+        }
+
+    </div>
+}
+
 <h4>Reviews</h4>
 
 @if (!Model.Reviews.Any())

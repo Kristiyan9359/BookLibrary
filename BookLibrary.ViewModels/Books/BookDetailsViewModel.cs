@@ -12,6 +12,8 @@ public class BookDetailsViewModel
     public int Pages { get; set; }
     public bool IsOwner { get; set; }
     public bool IsFavorite { get; set; }
+    public bool IsRented { get; set; }
+    public bool IsRentedByCurrentUser { get; set; }
     public IEnumerable<BookReviewViewModel> Reviews { get; set; }
             = new List<BookReviewViewModel>();
 }

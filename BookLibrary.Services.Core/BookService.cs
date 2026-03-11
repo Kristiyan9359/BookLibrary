@@ -53,6 +53,15 @@ public class BookService : IBookService
             return null;
         }
 
+        bool isRented = await context.BookRentals
+            .AnyAsync(r => r.BookId == id 
+                        && r.ReturnedOn == null);
+
+        bool isRentedByUser = userId != null && await context.BookRentals
+            .AnyAsync(r => r.BookId == id &&
+                           r.UserId == userId &&
+                           r.ReturnedOn == null);
+
         return new BookDetailsViewModel
         {
             Id = book.Id,
@@ -74,7 +83,9 @@ public class BookService : IBookService
                 .ToList(),
 
             IsOwner = userId != null && book.OwnerId == userId,
-            IsFavorite = userId != null && book.Favorites.Any(f => f.UserId == userId)
+            IsFavorite = userId != null && book.Favorites.Any(f => f.UserId == userId),
+            IsRented = isRented,
+            IsRentedByCurrentUser = isRentedByUser
         };
     }
 
