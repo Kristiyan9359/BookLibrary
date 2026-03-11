@@ -67,4 +67,14 @@ public class BookRentalController : BaseController
 
         return View(rentals);
     }
+
+    [HttpGet]
+    public async Task<IActionResult> History()
+    {
+        var userId = GetUserId()!;
+
+        var history = await rentalService.GetRentalHistoryAsync(userId);
+
+        return View(history);
+    }
 }

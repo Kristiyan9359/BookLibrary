@@ -11,4 +11,6 @@ public interface IBookRentalService
     Task<bool> IsBookRentedAsync(int bookId);
 
     Task<IEnumerable<RentalViewModel>> GetMyRentalsAsync(string userId);
+
+    Task<IEnumerable<RentalHistoryViewModel>> GetRentalHistoryAsync(string userId);
 }

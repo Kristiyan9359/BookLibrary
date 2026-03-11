@@ -72,4 +72,17 @@ public class BookRentalService : IBookRentalService
             })
             .ToListAsync();
     }
+    public async Task<IEnumerable<RentalHistoryViewModel>> GetRentalHistoryAsync(string userId)
+    {
+        return await context.BookRentals
+            .Where(r => r.UserId == userId)
+            .OrderByDescending(r => r.RentedOn)
+            .Select(r => new RentalHistoryViewModel
+            {
+                Title = r.Book.Title,
+                RentedOn = r.RentedOn,
+                ReturnedOn = r.ReturnedOn
+            })
+            .ToListAsync();
+    }
 }

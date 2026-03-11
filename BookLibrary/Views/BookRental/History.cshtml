@@ -1,0 +1,42 @@
+﻿@model IEnumerable<BookLibrary.ViewModels.Rentals.RentalHistoryViewModel>
+
+@{
+    ViewData["Title"] = "Rental History";
+}
+
+<h2 class="text-center">Rental History</h2>
+<hr />
+
+@if (!Model.Any())
+{
+    <p>You have no rental history.</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Book</th>
+                <th>Rented On</th>
+                <th>Returned On</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var rental in Model)
+            {
+                <tr>
+                    <td>@rental.Title</td>
+
+                    <td>@rental.RentedOn.ToString("dd.MM.yyyy")</td>
+
+                    <td>
+                        @(rental.ReturnedOn.HasValue
+                                        ? rental.ReturnedOn.Value.ToString("dd.MM.yyyy")
+                                        : "Still rented")
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
