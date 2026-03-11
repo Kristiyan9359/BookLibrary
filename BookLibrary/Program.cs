@@ -35,6 +35,8 @@ builder.Services.AddScoped<ICountryService, CountryService>();
 
 builder.Services.AddScoped<IGenreService, GenreService>();
 
+builder.Services.AddScoped<IBookRentalService, BookRentalService>();
+
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddControllersWithViews();
