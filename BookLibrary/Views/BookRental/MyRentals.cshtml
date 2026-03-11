@@ -1,0 +1,54 @@
+﻿@model IEnumerable<BookLibrary.ViewModels.Rentals.RentalViewModel>
+
+@{
+    ViewData["Title"] = "My Rentals";
+}
+
+<h2 class="text-center">My Rentals</h2>
+<hr />
+
+@if (!Model.Any())
+{
+    <p>You have no rented books.</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Book</th>
+                <th>Rented On</th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var rental in Model)
+            {
+                <tr>
+                    <td>@rental.Title</td>
+
+                    <td>@rental.RentedOn.ToString("dd.MM.yyyy")</td>
+
+                    <td>
+                        <form asp-controller="BookRental"
+                              asp-action="Return"
+                              method="post">
+
+                            <input type="hidden"
+                                   name="bookId"
+                                   value="@rental.BookId" />
+                            <input type="hidden"
+                                   name="returnUrl"
+                                   value="@Url.Action("MyRentals", "BookRental")" />
+                            <button class="btn btn-warning btn-sm">
+                                Return
+                            </button>
+
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

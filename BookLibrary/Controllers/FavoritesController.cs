@@ -35,7 +35,7 @@ public class FavoritesController : BaseController
     }
 
     [HttpGet]
-    public async Task<IActionResult> My()
+    public async Task<IActionResult> MyFavorites()
     {
         var userId = GetUserId()!;
 

@@ -1,6 +1,7 @@
 ﻿using BookLibrary.Data;
 using BookLibrary.Data.Models;
 using BookLibrary.Services.Core.Contracts;
+using BookLibrary.ViewModels.Rentals;
 using Microsoft.EntityFrameworkCore;
 
 namespace BookLibrary.Services.Core;
@@ -30,7 +31,7 @@ public class BookRentalService : IBookRentalService
             throw new InvalidOperationException("Book is already rented.");
         }
 
-        BookRental rental = new BookRental
+        var rental = new BookRental
         {
             BookId = bookId,
             UserId = userId,
@@ -43,13 +44,32 @@ public class BookRentalService : IBookRentalService
 
     public async Task ReturnBookAsync(int bookId, string userId)
     {
-        BookRental rental = await context.BookRentals
-            .FirstAsync(r => r.BookId == bookId
-                          && r.UserId == userId
-                          && r.ReturnedOn == null);
+        var rental = await context.BookRentals
+            .FirstOrDefaultAsync(r =>
+                r.BookId == bookId &&
+                r.UserId == userId &&
+                r.ReturnedOn == null);
+
+        if (rental == null)
+        {
+            throw new InvalidOperationException("Rental not found.");
+        }
 
         rental.ReturnedOn = DateTime.UtcNow;
 
         await context.SaveChangesAsync();
+    }
+
+    public async Task<IEnumerable<RentalViewModel>> GetMyRentalsAsync(string userId)
+    {
+        return await context.BookRentals
+            .Where(r => r.UserId == userId && r.ReturnedOn == null)
+            .Select(r => new RentalViewModel
+            {
+                BookId = r.BookId,
+                Title = r.Book.Title,
+                RentedOn = r.RentedOn
+            })
+            .ToListAsync();
     }
 }

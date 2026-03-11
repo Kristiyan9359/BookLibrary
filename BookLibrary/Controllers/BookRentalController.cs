@@ -36,20 +36,35 @@ public class BookRentalController : BaseController
     }
 
     [HttpPost]
-    public async Task<IActionResult> Return(int bookId)
+    public async Task<IActionResult> Return(int bookId, string? returnUrl)
     {
         var userId = GetUserId()!;
 
         try
         {
             await rentalService.ReturnBookAsync(bookId, userId);
+            TempData["SuccessMessage"] = "Book was returned successfully.";
         }
-        catch
+        catch (InvalidOperationException ex)
         {
-            return BadRequest();
+            TempData["ErrorMessage"] = ex.Message;
         }
 
-        TempData["SuccessMessage"] = "Book was returned successfully.";
-        return RedirectToAction("Details", "Books", new { id = bookId });
+        if (!string.IsNullOrEmpty(returnUrl))
+        {
+            return Redirect(returnUrl);
+        }
+
+        return RedirectToAction("Index", "Books");
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> MyRentals()
+    {
+        var userId = GetUserId()!;
+
+        var rentals = await rentalService.GetMyRentalsAsync(userId);
+
+        return View(rentals);
     }
 }

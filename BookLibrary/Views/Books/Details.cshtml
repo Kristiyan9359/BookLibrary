@@ -39,7 +39,8 @@
                   method="post">
 
                 <input type="hidden" name="bookId" value="@Model.Id" />
-
+                <input type="hidden" name="returnUrl"
+                       value="@Url.Action("Details", "Books", new { id = Model.Id })" />
                 <button class="btn btn-warning">
                     ↩ Return Book
                 </button>
