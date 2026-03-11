@@ -37,4 +37,7 @@ public class Book
 
     public virtual ICollection<Favorite> Favorites { get; set; }
         = new HashSet<Favorite>();
+
+    public virtual ICollection<BookRental> Rentals { get; set; }
+        = new HashSet<BookRental>();
 }

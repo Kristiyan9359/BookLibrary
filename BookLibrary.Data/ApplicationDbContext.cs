@@ -17,6 +17,7 @@ public class ApplicationDbContext : IdentityDbContext
     public virtual DbSet<Models.Genre> Genres { get; set; } = null!;
     public virtual DbSet<Models.Review> Reviews { get; set; } = null!;
     public virtual DbSet<Models.Favorite> Favorites { get; set; } = null!;
+    public virtual DbSet<Models.BookRental> BookRentals { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -46,6 +47,12 @@ public class ApplicationDbContext : IdentityDbContext
             .HasOne(b => b.Genre)
             .WithMany(g => g.Books)
             .HasForeignKey(b => b.GenreId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<BookRental>()
+            .HasOne(r => r.Book)
+            .WithMany(b => b.Rentals)
+            .HasForeignKey(r => r.BookId)
             .OnDelete(DeleteBehavior.Restrict);
 
         modelBuilder.Entity<Favorite>()
