@@ -60,3 +60,74 @@ html, body {
     .navbar-harbor .navbar-toggler-icon {
         filter: invert(1);
     }
+
+.nav-link:hover {
+    color: #ffc107 !important;
+}
+
+.nav-link i {
+    font-size: 1.1rem;
+}
+
+.navbar-harbor .nav-link {
+    transition: all 0.2s ease;
+}
+
+    .navbar-harbor .nav-link:hover {
+        transform: translateY(-2px);
+        color: #ffc107 !important;
+    }
+
+    .navbar-harbor .nav-link i {
+        transition: transform 0.2s ease;
+    }
+
+    .navbar-harbor .nav-link:hover i {
+        transform: scale(1.2);
+    }
+
+.navbar-brand i {
+    font-size: 1.4rem;
+}
+
+.card {
+    transition: transform 0.2s ease;
+}
+
+    .card:hover {
+        transform: translateY(-5px);
+    }
+body {
+    background-image: url('/images/library-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+main.container {
+    background-color: rgba(255, 255, 255, 0.6);
+    padding: 25px;
+    border-radius: 10px;
+}
+
+h1, h2, h3, h4, h5, p
+{
+    text-shadow: 1px 1px 6px rgba(0,0,0,0.7);
+}
+
+.display-4 {
+    text-shadow: 2px 2px 10px rgba(0,0,0,0.9);
+}
+
+main.container {
+    background: rgba(255,255,255,0.55);
+    backdrop-filter: blur(6px);
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+}
+.card {
+    background-color: rgba(255,255,255,0.65);
+    backdrop-filter: blur(4px);
+    border: none;
+}

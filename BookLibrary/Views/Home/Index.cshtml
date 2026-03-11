@@ -2,34 +2,74 @@
     ViewData["Title"] = "Home";
 }
 
-<div class="text-center mt-5">
-    <h1 class="display-5 fw-bold">
-        Welcome to BookLibrary
+<div class="text-center mb-5">
+
+    <h1 class="display-4 fw-bold">
+        <i class="bi bi-collection-fill text-warning me-2"></i>
+        Welcome to Book Library
     </h1>
 
-    <p class="lead mt-3">
-        A library system where you can explore books,
-        manage your collection, and share your opinions through reviews.
+    <p class="lead text-black">
+        Discover books, leave reviews, add favorites and rent books easily.
     </p>
 
-    <hr class="my-4" />
+    <a asp-controller="Books"
+       asp-action="Index"
+       class="btn btn-primary btn-lg mt-2">
 
-    <p class="mb-4">
-        Browse available books, check their ratings,
-        or rent a book.
-    </p>
+        <i class="bi bi-book me-2"></i>
+        Browse Books
+    </a>
 
-    <div class="d-flex justify-content-center gap-3">
-        <a asp-controller="Books"
-           asp-action="Index"
-           class="btn btn-primary btn-lg">
-            📚 Browse Books
-        </a>
+</div>
+<div class="row text-center mt-5">
 
-        @* <a asp-controller="Books"
-           asp-action="Create"
-           class="btn btn-outline-secondary btn-lg">
-            ➕ Add New Book
-        </a> *@
+    <div class="col-md-4">
+        <div class="card border-0 shadow h-100 bg-transparent">
+            <div class="card-body">
+
+                <i class="bi bi-book text-primary display-5"></i>
+
+                <h5 class="card-title mt-3">Explore Books</h5>
+
+                <p class="card-text text-black">
+                    Browse a rich collection of books with authors and genres.
+                </p>
+
+            </div>
+        </div>
     </div>
+
+    <div class="col-md-4">
+        <div class="card border-0 shadow h-100 bg-transparent">
+            <div class="card-body">
+
+                <i class="bi bi-heart-fill text-danger display-5"></i>
+
+                <h5 class="card-title mt-3">Favorites</h5>
+
+                <p class="card-text text-black">
+                    Save your favorite books and access them anytime.
+                </p>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card border-0 shadow h-100 bg-transparent">
+            <div class="card-body">
+
+                <i class="bi bi-journal-check text-success display-5"></i>
+
+                <h5 class="card-title mt-3">Rent Books</h5>
+
+                <p class="card-text text-black">
+                    Rent books easily and manage your rentals.
+                </p>
+
+            </div>
+        </div>
+    </div>
+
 </div>

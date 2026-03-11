@@ -13,21 +13,38 @@
 }
 else
 {
-    <ul class="list-group">
-        @foreach (var book in Model)
-        {
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-                <span>
-                    <strong>@book.Title</strong> by @book.Author
-                </span>
+    <table class="table table-striped">
 
-                <a asp-controller="Books"
-                   asp-action="Details"
-                   asp-route-id="@book.Id"
-                   class="btn btn-sm btn-outline-primary">
-                    View
-                </a>
-            </li>
-        }
-    </ul>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var book in Model)
+            {
+                <tr>
+
+                    <td>@book.Title</td>
+
+                    <td>@book.Author</td>
+
+                    <td>
+                        <a asp-controller="Books"
+                           asp-action="Details"
+                           asp-route-id="@book.Id"
+                           class="btn btn-sm btn-outline-primary">
+
+                            View
+                        </a>
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+
+    </table>
 }

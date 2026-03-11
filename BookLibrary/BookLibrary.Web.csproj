@@ -27,4 +27,8 @@
     <ProjectReference Include="..\BookLibrary.ViewModels\BookLibrary.ViewModels.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\Images\" />
+  </ItemGroup>
+
 </Project>
