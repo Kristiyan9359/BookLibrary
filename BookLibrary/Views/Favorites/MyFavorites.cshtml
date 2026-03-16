@@ -4,7 +4,7 @@
     ViewData["Title"] = "My Favorites";
 }
 
-<h2 class="text-center">My Favorites</h2>
+<h2 class="text-center mb-4">My Favorites</h2>
 <hr />
 
 @if (!Model.Any())
@@ -13,38 +13,53 @@
 }
 else
 {
-    <table class="table table-striped">
+    <div class="row g-4">
 
-        <thead>
-            <tr>
-                <th>Title</th>
-                <th>Author</th>
-                <th></th>
-            </tr>
-        </thead>
+        @foreach (var book in Model)
+        {
+            <div class="col-md-6">
 
-        <tbody>
-            @foreach (var book in Model)
-            {
-                <tr>
+                <div class="card shadow-sm border-0">
 
-                    <td>@book.Title</td>
+                    <div class="row g-0">
 
-                    <td>@book.Author</td>
+                        <div class="col-4">
 
-                    <td>
-                        <a asp-controller="Books"
-                           asp-action="Details"
-                           asp-route-id="@book.Id"
-                           class="btn btn-sm btn-outline-primary">
+                            <img src="@book.ImageUrl"
+                                 class="img-fluid rounded-start"
+                                 style="height:140px; object-fit:cover;" />
 
-                            View
-                        </a>
-                    </td>
+                        </div>
 
-                </tr>
-            }
-        </tbody>
+                        <div class="col-8">
 
-    </table>
+                            <div class="card-body">
+
+                                <h6 class="card-title">@book.Title</h6>
+
+                                <p class="text-muted small mb-2">
+                                    @book.Author
+                                </p>
+
+                                <a asp-controller="Books"
+                                       asp-action="Details"
+                                       asp-route-id="@book.Id"
+                                       class="btn btn-sm btn-primary">
+
+                                    Details
+
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        }
+
+    </div>
 }

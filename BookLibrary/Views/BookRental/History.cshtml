@@ -4,7 +4,7 @@
     ViewData["Title"] = "Rental History";
 }
 
-<h2 class="text-center">Rental History</h2>
+<h2 class="text-center mb-4">Rental History</h2>
 <hr />
 
 @if (!Model.Any())
@@ -13,30 +13,54 @@
 }
 else
 {
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Book</th>
-                <th>Rented On</th>
-                <th>Returned On</th>
-            </tr>
-        </thead>
+    <div class="row g-4">
 
-        <tbody>
-            @foreach (var rental in Model)
-            {
-                <tr>
-                    <td>@rental.Title</td>
+        @foreach (var rental in Model)
+        {
+            <div class="col-md-6">
 
-                    <td>@rental.RentedOn.ToString("dd.MM.yyyy")</td>
+                <div class="card border-0 shadow-sm">
 
-                    <td>
-                        @(rental.ReturnedOn.HasValue
+                    <div class="row g-0">
+
+                        <div class="col-4">
+
+                            <img src="@rental.ImageUrl"
+                                 class="img-fluid rounded-start"
+                                 style="height:150px; object-fit:cover;" />
+
+                        </div>
+
+                        <div class="col-8">
+
+                            <div class="card-body">
+
+                                <h6 class="card-title">
+                                    @rental.Title
+                                </h6>
+
+                                <p class="text-muted small mb-1">
+                                    Rented on:
+                                    @rental.RentedOn.ToString("dd.MM.yyyy")
+                                </p>
+
+                                <p class="text-muted small mb-2">
+                                    Returned on:
+                                    @(rental.ReturnedOn.HasValue
                                         ? rental.ReturnedOn.Value.ToString("dd.MM.yyyy")
                                         : "Still rented")
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        }
+
+    </div>
 }

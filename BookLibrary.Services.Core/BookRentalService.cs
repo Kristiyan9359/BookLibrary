@@ -68,7 +68,10 @@ public class BookRentalService : IBookRentalService
             {
                 BookId = r.BookId,
                 Title = r.Book.Title,
-                RentedOn = r.RentedOn
+                RentedOn = r.RentedOn,
+                ImageUrl = string.IsNullOrWhiteSpace(r.Book.ImageUrl)
+                            ? "/images/default-book.jpg"
+                            : r.Book.ImageUrl
             })
             .ToListAsync();
     }
@@ -81,7 +84,10 @@ public class BookRentalService : IBookRentalService
             {
                 Title = r.Book.Title,
                 RentedOn = r.RentedOn,
-                ReturnedOn = r.ReturnedOn
+                ReturnedOn = r.ReturnedOn,
+                ImageUrl = string.IsNullOrWhiteSpace(r.Book.ImageUrl)
+                            ? "/images/default-book.jpg"
+                            : r.Book.ImageUrl
             })
             .ToListAsync();
     }

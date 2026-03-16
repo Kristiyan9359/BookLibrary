@@ -7,4 +7,6 @@ public class RentalHistoryViewModel
     public DateTime RentedOn { get; set; }
 
     public DateTime? ReturnedOn { get; set; }
+
+    public string ImageUrl { get; set; } = null!;
 }

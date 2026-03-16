@@ -55,7 +55,10 @@ public class FavoriteService : IFavoriteService
             {
                 Id = f.Book.Id,
                 Title = f.Book.Title,
-                Author = f.Book.Author.FirstName + " " + f.Book.Author.LastName
+                Author = f.Book.Author.FirstName + " " + f.Book.Author.LastName,
+                ImageUrl = string.IsNullOrWhiteSpace(f.Book.ImageUrl)
+                            ? "/images/default-book.jpg"
+                            : f.Book.ImageUrl
             })
             .ToListAsync();
     }

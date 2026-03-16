@@ -4,7 +4,7 @@
     ViewData["Title"] = "My Rentals";
 }
 
-<h2 class="text-center">My Rentals</h2>
+<h2 class="text-center mb-4">My Rentals</h2>
 <hr />
 
 @if (!Model.Any())
@@ -13,42 +13,65 @@
 }
 else
 {
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Book</th>
-                <th>Rented On</th>
-                <th></th>
-            </tr>
-        </thead>
+    <div class="row g-4">
 
-        <tbody>
-            @foreach (var rental in Model)
-            {
-                <tr>
-                    <td>@rental.Title</td>
+        @foreach (var rental in Model)
+        {
+            <div class="col-md-6">
 
-                    <td>@rental.RentedOn.ToString("dd.MM.yyyy")</td>
+                <div class="card border-0 shadow-sm">
 
-                    <td>
-                        <form asp-controller="BookRental"
-                              asp-action="Return"
-                              method="post">
+                    <div class="row g-0">
 
-                            <input type="hidden"
-                                   name="bookId"
-                                   value="@rental.BookId" />
-                            <input type="hidden"
-                                   name="returnUrl"
-                                   value="@Url.Action("MyRentals", "BookRental")" />
-                            <button class="btn btn-warning btn-sm">
-                                Return
-                            </button>
+                        <div class="col-4">
 
-                        </form>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+                            <img src="@rental.ImageUrl"
+                                 class="img-fluid rounded-start"
+                                 style="height:150px; object-fit:cover;" />
+
+                        </div>
+
+                        <div class="col-8">
+
+                            <div class="card-body">
+
+                                <h6 class="card-title">
+                                    @rental.Title
+                                </h6>
+
+                                <p class="text-muted small mb-2">
+                                    Rented on:
+                                    @rental.RentedOn.ToString("dd.MM.yyyy")
+                                </p>
+
+                                <form asp-controller="BookRental"
+                                      asp-action="Return"
+                                      method="post">
+
+                                    <input type="hidden"
+                                           name="bookId"
+                                           value="@rental.BookId" />
+
+                                    <input type="hidden"
+                                           name="returnUrl"
+                                           value="@Url.Action("MyRentals", "BookRental")" />
+
+                                    <button class="btn btn-warning btn-sm">
+                                        ↩ Return
+                                    </button>
+
+                                </form>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        }
+
+    </div>
 }
