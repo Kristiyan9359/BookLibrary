@@ -30,6 +30,9 @@ public class BookService : IBookService
                 Genre = b.Genre.Name,
                 Year = b.Year,
                 Pages = b.Pages,
+                ImageUrl = string.IsNullOrWhiteSpace(b.ImageUrl)
+                ? "/images/default-book.jpg"
+                : b.ImageUrl,
                 ReviewsCount = b.Reviews.Count,
                 AverageRating = b.Reviews.Any()
                     ? b.Reviews.Average(r => r.Rating)
@@ -71,7 +74,9 @@ public class BookService : IBookService
             Genre = book.Genre.Name,
             Year = book.Year,
             Pages = book.Pages,
-
+            ImageUrl = string.IsNullOrWhiteSpace(book.ImageUrl)
+                ? "/images/default-book.jpg"
+                : book.ImageUrl,
             Reviews = book.Reviews
                 .OrderByDescending(r => r.CreatedOn)
                 .Select(r => new BookReviewViewModel

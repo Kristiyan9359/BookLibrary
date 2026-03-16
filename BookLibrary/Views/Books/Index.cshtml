@@ -4,57 +4,64 @@
     ViewData["Title"] = "Books";
 }
 
-<h2 class="text-center">Books</h2>
+<h2 class="text-center mb-4">Books</h2>
 <hr />
 
-<a asp-action="Create" class="btn btn-success mb-3">
-    Add new book
+<a asp-action="Create" class="btn btn-success mb-4">
+    ➕ Add new book
 </a>
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Title</th>
-            <th>Author</th>
-            <th>Year</th>
-            <th>Genre</th>
-            <th>Pages</th>
-            <th>Rating</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var book in Model)
-        {
-            <tr>
-                <td>@book.Title</td>
-                <td>@book.Author</td>
-                <td>@book.Year</td>
-                <td>@book.Genre</td>
-                <td>@book.Pages</td>
-                <td>
+<div class="row g-4">
+
+    @foreach (var book in Model)
+    {
+        <div class="col-lg-3 col-md-4 col-sm-6">
+
+            <div class="card book-card h-100 shadow-sm">
+
+                <img src="@book.ImageUrl"
+                     class="card-img-top"
+                     alt="@book.Title" />
+
+                <div class="card-body text-center">
+
+                    <h6 class="card-title">@book.Title</h6>
+
+                    <p class="text-muted small mb-1">
+                        @book.Author
+                    </p>
+
+                    <p class="small mb-2">
+                        @book.Year • @book.Genre
+                    </p>
+
                     @if (book.AverageRating.HasValue)
                     {
-                        <span class="badge bg-success">
-                            @book.AverageRating.Value.ToString("0.0")
+                        <span class="badge bg-success mb-2">
+                            ⭐ @book.AverageRating.Value.ToString("0.0")
                             <small>(@book.ReviewsCount)</small>
                         </span>
                     }
                     else
                     {
-                        <span class="badge bg-secondary">
+                        <span class="badge bg-secondary mb-2">
                             No reviews
                         </span>
                     }
-                </td>
-                <td>
-                    <a asp-action="Details"
-                       asp-route-id="@book.Id"
-                       class="btn btn-sm btn-primary">
-                        Details
-                    </a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+
+                    <div>
+                        <a asp-action="Details"
+                               asp-route-id="@book.Id"
+                               class="btn btn-sm btn-primary">
+                            Details
+                        </a>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    }
+
+</div>

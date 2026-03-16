@@ -27,6 +27,7 @@ public class BookCreateViewModel
     [Display(Name = "Genre")]
     public int GenreId { get; set; }
 
+    public string? ImageUrl { get; set; }
 
     public IEnumerable<SelectListItem> Authors { get; set; }
         = new List<SelectListItem>();

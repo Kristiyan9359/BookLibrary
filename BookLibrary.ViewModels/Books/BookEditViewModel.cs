@@ -27,6 +27,7 @@ namespace BookLibrary.ViewModels.Books
         [Required(ErrorMessage = "Genre is requiered")]
         public int GenreId { get; set; }
 
+        public string? ImageUrl { get; set; }
         public IEnumerable<SelectListItem> Authors { get; set; }
             = new List<SelectListItem>();
         public IEnumerable<SelectListItem> Genres { get; set; }

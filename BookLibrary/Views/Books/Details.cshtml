@@ -4,58 +4,85 @@
     ViewData["Title"] = "Book Details";
 }
 
-<h2>@Model.Title</h2>
+<div class="row mb-4">
 
-<ul class="list-group mb-3">
-    <li class="list-group-item"><strong>Author:</strong> @Model.Author</li>
-    <li class="list-group-item"><strong>Country:</strong> @Model.Country</li>
-    <li class="list-group-item"><strong>Genre:</strong> @Model.Genre</li>
-    <li class="list-group-item"><strong>Year:</strong> @Model.Year</li>
-    <li class="list-group-item"><strong>Pages:</strong> @Model.Pages</li>
-</ul>
+    <div class="col-md-4 text-center">
 
-@if (User.Identity?.IsAuthenticated == true)
-{
-    <div class="mb-3">
+        <img src="@Model.ImageUrl"
+             class="img-fluid rounded shadow"
+             style="max-height:420px;" />
 
-        @if (!Model.IsRented)
+    </div>
+
+    <div class="col-md-8">
+
+        <h2>@Model.Title</h2>
+
+        <ul class="list-group mb-3">
+
+            <li class="list-group-item"><strong>Author:</strong> @Model.Author</li>
+
+            <li class="list-group-item"><strong>Country:</strong> @Model.Country</li>
+
+            <li class="list-group-item"><strong>Genre:</strong> @Model.Genre</li>
+
+            <li class="list-group-item"><strong>Year:</strong> @Model.Year</li>
+
+            <li class="list-group-item"><strong>Pages:</strong> @Model.Pages</li>
+
+        </ul>
+
+        @if (User.Identity?.IsAuthenticated == true)
         {
-            <form asp-controller="BookRental"
-                  asp-action="Rent"
-                  method="post">
+            <div class="mb-3">
 
-                <input type="hidden" name="bookId" value="@Model.Id" />
+                @if (!Model.IsRented)
+                {
+                    <form asp-controller="BookRental"
+                          asp-action="Rent"
+                          method="post">
 
-                <button class="btn btn-success">
-                    📚 Rent Book
-                </button>
+                        <input type="hidden" name="bookId" value="@Model.Id" />
 
-            </form>
-        }
-        else if (Model.IsRentedByCurrentUser)
-        {
-            <form asp-controller="BookRental"
-                  asp-action="Return"
-                  method="post">
+                        <button class="btn btn-success">
+                            📚 Rent Book
+                        </button>
 
-                <input type="hidden" name="bookId" value="@Model.Id" />
-                <input type="hidden" name="returnUrl"
-                       value="@Url.Action("Details", "Books", new { id = Model.Id })" />
-                <button class="btn btn-warning">
-                    ↩ Return Book
-                </button>
+                    </form>
+                }
+                else if (Model.IsRentedByCurrentUser)
+                {
+                    <form asp-controller="BookRental"
+                          asp-action="Return"
+                          method="post">
 
-            </form>
-        }
-        else
-        {
-            <span class="badge bg-danger">
-                Book is currently rented
-            </span>
+                        <input type="hidden" name="bookId" value="@Model.Id" />
+
+                        <input type="hidden"
+                               name="returnUrl"
+                               value="@Url.Action("Details", "Books", new { id = Model.Id })" />
+
+                        <button class="btn btn-warning">
+                            ↩ Return Book
+                        </button>
+
+                    </form>
+                }
+                else
+                {
+                    <span class="badge bg-danger">
+                        Book is currently rented
+                    </span>
+                }
+
+            </div>
         }
 
     </div>
-}
+
+</div>
+
+<hr />
 
 <h4>Reviews</h4>
 
@@ -66,16 +93,24 @@
 else
 {
     <ul class="list-group mb-3">
+
         @foreach (var review in Model.Reviews)
         {
             <li class="list-group-item">
-                <strong>Rating:</strong> @review.Rating / 5 <br />
+
+                <strong>Rating:</strong> @review.Rating / 5
+
+                <br />
+
                 <small class="text-muted">
                     @review.CreatedOn.ToString("dd.MM.yyyy")
                 </small>
+
                 <p class="mb-0">@review.Comment</p>
+
             </li>
         }
+
     </ul>
 }
 
@@ -86,30 +121,41 @@ else
     <h4>Add Review</h4>
 
     <form asp-controller="Reviews" asp-action="Add" method="post">
+
         <input type="hidden" name="BookId" value="@Model.Id" />
 
         <div class="mb-3">
+
             <label class="form-label">Rating</label>
+
             <select name="Rating" class="form-select">
+
                 <option value="">-- Select rating --</option>
+
                 @for (int i = 1; i <= 5; i++)
                 {
                     <option value="@i">@i</option>
                 }
+
             </select>
+
         </div>
 
         <div class="mb-3">
+
             <label class="form-label">Comment</label>
+
             <textarea name="Comment"
-                  class="form-control"
-                  rows="3"
-                  placeholder="Optional comment..."></textarea>
+                      class="form-control"
+                      rows="3"
+                      placeholder="Optional comment..."></textarea>
+
         </div>
 
         <button type="submit" class="btn btn-success">
             ➕ Add review
         </button>
+
     </form>
 
     <form asp-controller="Favorites"
@@ -121,29 +167,34 @@ else
 
         <button type="submit"
                 class="btn @(Model.IsFavorite ? "btn-outline-danger" : "btn-outline-primary")">
+
             @(Model.IsFavorite ? "💔 Remove from favorites" : "❤️ Add to favorites")
+
         </button>
+
     </form>
 }
 
 <div class="mt-4">
+
     @if (User.Identity?.IsAuthenticated == true && Model.IsOwner)
     {
         <a asp-action="Edit"
-           asp-route-id="@Model.Id"
-           class="btn btn-warning me-2">
+               asp-route-id="@Model.Id"
+               class="btn btn-warning me-2">
             Edit
         </a>
 
         <a asp-action="Delete"
-           asp-route-id="@Model.Id"
-           class="btn btn-danger me-2">
+               asp-route-id="@Model.Id"
+               class="btn btn-danger me-2">
             Delete
         </a>
     }
 
     <a asp-action="Index"
-       class="btn btn-secondary">
+           class="btn btn-secondary">
         Back to list
     </a>
+
 </div>

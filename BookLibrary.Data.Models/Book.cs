@@ -32,6 +32,8 @@ public class Book
     public string OwnerId { get; set; } = null!;
     public IdentityUser Owner { get; set; } = null!;
 
+    public string? ImageUrl { get; set; }
+
     public virtual ICollection<Review> Reviews { get; set; }
         = new HashSet<Review>();
 

@@ -14,6 +14,8 @@ public class BookDetailsViewModel
     public bool IsFavorite { get; set; }
     public bool IsRented { get; set; }
     public bool IsRentedByCurrentUser { get; set; }
+
+    public string? ImageUrl { get; set; }
     public IEnumerable<BookReviewViewModel> Reviews { get; set; }
             = new List<BookReviewViewModel>();
 }
