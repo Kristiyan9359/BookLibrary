@@ -25,6 +25,16 @@
     </div>
 
     <div class="mb-3">
+        <label asp-for="ImageUrl" class="form-label">
+            Book Cover URL
+        </label>
+        <input asp-for="ImageUrl"
+               class="form-control"
+               placeholder="Paste image URL..." />
+        <span asp-validation-for="ImageUrl" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
         <label asp-for="AuthorId" class="form-label"></label>
         <select asp-for="AuthorId"
                 asp-items="Model.Authors"
