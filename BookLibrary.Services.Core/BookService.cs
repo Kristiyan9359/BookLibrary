@@ -125,7 +125,8 @@ public class BookService : IBookService
             Pages = model.Pages,
             AuthorId = model.AuthorId,
             GenreId = model.GenreId,
-            OwnerId = ownerId
+            OwnerId = ownerId,
+            ImageUrl = model.ImageUrl
         };
 
         await context.Books.AddAsync(book);
@@ -181,6 +182,7 @@ public class BookService : IBookService
         book.Pages = model.Pages;
         book.AuthorId = model.AuthorId;
         book.GenreId = model.GenreId;
+        book.ImageUrl = model.ImageUrl;
 
         await context.SaveChangesAsync();
     }
@@ -213,14 +215,28 @@ public class BookService : IBookService
 
     public async Task DeleteAsync(int id, string userId)
     {
-        var book = await context.Books.FindAsync(id);
+        var book = await context.Books
+            .Include(b => b.Favorites)
+            .Include(b => b.Rentals)
+            .FirstOrDefaultAsync(b => b.Id == id);
 
-        if (book == null || book.OwnerId != userId)
+        if (book == null)
         {
-            throw new UnauthorizedAccessException();
+            throw new InvalidOperationException("Book not found.");
         }
 
+        if (book.Rentals.Any(r => r.ReturnedOn == null))
+        {
+            throw new InvalidOperationException(
+                "This book cannot be deleted because it is currently rented.");
+        }
+
+        context.Favorites.RemoveRange(book.Favorites);
+
+        context.BookRentals.RemoveRange(book.Rentals);
+
         context.Books.Remove(book);
+
         await context.SaveChangesAsync();
     }
 }

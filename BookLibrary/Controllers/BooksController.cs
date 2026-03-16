@@ -146,10 +146,15 @@ public class BooksController : BaseController
         {
             await bookService.DeleteAsync(id, userId);
         }
-
+        catch (InvalidOperationException ex)
+        {
+            TempData["ErrorMessage"] = ex.Message;
+            return RedirectToAction(nameof(Index));
+        }
         catch (Exception)
         {
-            return BadRequest();
+            TempData["ErrorMessage"] = "Unexpected error while deleting the book.";
+            return RedirectToAction(nameof(Index));
         }
 
         TempData["SuccessMessage"] = "Book was deleted successfully.";
