@@ -8,5 +8,6 @@ public class CountryCreateViewModel
     [Required(ErrorMessage = "Country name is required")]
     [MinLength(CountryNameMinLength, ErrorMessage = "Country name must be at least 2 characters long.")]
     [MaxLength(CountryNameMaxLength)]
+    [Display(Name = "Country Name")]
     public string Name { get; set; } = null!;
 }

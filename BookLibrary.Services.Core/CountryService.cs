@@ -23,6 +23,7 @@ public class CountryService : ICountryService
                 Id = c.Id,
                 Name = c.Name
             })
+            .OrderBy(c => c.Name)
             .ToListAsync();
     }
 

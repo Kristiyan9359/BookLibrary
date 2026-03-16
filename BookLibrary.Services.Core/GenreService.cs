@@ -23,6 +23,7 @@ public class GenreService : IGenreService
                 Id = g.Id,
                 Name = g.Name
             })
+            .OrderBy(g => g.Name)
             .ToListAsync();
     }
 

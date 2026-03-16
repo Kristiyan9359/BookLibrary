@@ -27,6 +27,7 @@ public class AuthorService : IAuthorService
                 LastName = a.LastName,
                 Country = a.Country.Name
             })
+            .OrderBy(a => a.FirstName)
             .ToListAsync();
     }
 

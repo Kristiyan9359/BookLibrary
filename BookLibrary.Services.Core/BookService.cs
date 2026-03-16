@@ -38,6 +38,10 @@ public class BookService : IBookService
                     ? b.Reviews.Average(r => r.Rating)
                     : null
             })
+            .OrderBy(b => b.Title)
+            .ThenBy(b => b.Author)
+            .ThenBy(b => b.Genre)
+            .ThenBy(b => b.Year)
             .ToListAsync();
     }
 
@@ -57,7 +61,7 @@ public class BookService : IBookService
         }
 
         bool isRented = await context.BookRentals
-            .AnyAsync(r => r.BookId == id 
+            .AnyAsync(r => r.BookId == id
                         && r.ReturnedOn == null);
 
         bool isRentedByUser = userId != null && await context.BookRentals

@@ -11,21 +11,24 @@
 
     <div class="form-group mb-3">
         <label asp-for="FirstName"></label>
-        <input asp-for="FirstName" class="form-control" />
+        <input asp-for="FirstName" class="form-control"
+        placeholder="Enter first name..."/>
         <span asp-validation-for="FirstName" class="text-danger"></span>
     </div>
 
     <div class="form-group mb-3">
         <label asp-for="LastName"></label>
-        <input asp-for="LastName" class="form-control" />
+        <input asp-for="LastName" class="form-control" 
+               placeholder="Enter last name..." />
         <span asp-validation-for="LastName" class="text-danger"></span>
     </div>
-
-    <div class="form-group mb-3">
-        <label asp-for="CountryId"></label>
+        
+    <div class="mb-3">
+        <label asp-for="CountryId" class="form-label"></label>
         <select asp-for="CountryId"
                 asp-items="Model.Countries"
-                class="form-control">
+                class="form-select">
+            <option value="">-- Select country --</option>
         </select>
         <span asp-validation-for="CountryId" class="text-danger"></span>
     </div>
