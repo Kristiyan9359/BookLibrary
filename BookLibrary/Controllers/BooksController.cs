@@ -2,7 +2,9 @@
 
 using BookLibrary.Services.Core.Contracts;
 using BookLibrary.ViewModels.Books;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using static BookLibrary.Common.RoleConstants;
 
 public class BooksController : BaseController
 {
@@ -36,6 +38,7 @@ public class BooksController : BaseController
     }
 
     [HttpGet]
+    [Authorize(Roles = Admin)]
     public async Task<IActionResult> Create()
     {
         var model = await bookService.GetCreateAsync();
@@ -43,6 +46,7 @@ public class BooksController : BaseController
     }
 
     [HttpPost]
+    [Authorize(Roles = Admin)]
     public async Task<IActionResult> Create(BookCreateViewModel model)
     {
         if (!ModelState.IsValid)
@@ -51,13 +55,11 @@ public class BooksController : BaseController
             return View(model);
         }
 
-        var userId = GetUserId()!;
-
         try
         {
-            await bookService.CreateAsync(model, userId);
+            await bookService.CreateAsync(model);
         }
-        catch (Exception)
+        catch
         {
             ModelState.AddModelError(string.Empty, "Unexpected error while creating the book.");
             model = await bookService.GetCreateAsync();
@@ -69,32 +71,30 @@ public class BooksController : BaseController
     }
 
     [HttpGet]
+    [Authorize(Roles = Admin)]
     public async Task<IActionResult> Edit(int id)
     {
-        var userId = GetUserId()!;
-
-        var model = await bookService.GetEditAsync(id, userId);
+        var model = await bookService.GetEditAsync(id);
 
         if (model == null)
         {
-            return Forbid();
+            return NotFound();
         }
 
         return View(model);
     }
 
     [HttpPost]
+    [Authorize(Roles = Admin)]
     public async Task<IActionResult> Edit(int id, BookEditViewModel model)
     {
-        var userId = GetUserId()!;
-
         if (!ModelState.IsValid)
         {
-            var fullModel = await bookService.GetEditAsync(id, userId);
+            var fullModel = await bookService.GetEditAsync(id);
 
             if (fullModel == null)
             {
-                return Forbid();
+                return NotFound();
             }
 
             fullModel.Title = model.Title;
@@ -102,19 +102,19 @@ public class BooksController : BaseController
             fullModel.Pages = model.Pages;
             fullModel.AuthorId = model.AuthorId;
             fullModel.GenreId = model.GenreId;
+            fullModel.ImageUrl = model.ImageUrl;
 
             return View(fullModel);
         }
 
         try
         {
-            await bookService.EditAsync(id, model, userId);
+            await bookService.EditAsync(id, model);
         }
-
         catch
         {
             ModelState.AddModelError(string.Empty, "Unexpected error.");
-            var fullModel = await bookService.GetEditAsync(id, userId);
+            var fullModel = await bookService.GetEditAsync(id);
             return View(fullModel);
         }
 
@@ -123,35 +123,33 @@ public class BooksController : BaseController
     }
 
     [HttpGet]
+    [Authorize(Roles = Admin)]
     public async Task<IActionResult> Delete(int id)
     {
-        var userId = GetUserId()!;
-
-        var model = await bookService.GetDeleteAsync(id, userId);
+        var model = await bookService.GetDeleteAsync(id);
 
         if (model == null)
         {
-            return Forbid();
+            return NotFound();
         }
 
         return View(model);
     }
 
     [HttpPost]
+    [Authorize(Roles = Admin)]
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
-        var userId = GetUserId()!;
-
         try
         {
-            await bookService.DeleteAsync(id, userId);
+            await bookService.DeleteAsync(id);
         }
         catch (InvalidOperationException ex)
         {
             TempData["ErrorMessage"] = ex.Message;
             return RedirectToAction(nameof(Index));
         }
-        catch (Exception)
+        catch
         {
             TempData["ErrorMessage"] = "Unexpected error while deleting the book.";
             return RedirectToAction(nameof(Index));

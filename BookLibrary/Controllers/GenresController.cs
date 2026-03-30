@@ -2,8 +2,11 @@
 
 using BookLibrary.Services.Core.Contracts;
 using BookLibrary.ViewModels.Genres;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using static BookLibrary.Common.RoleConstants;
 
+[Authorize(Roles = Admin)]
 public class GenresController : BaseController
 {
     private readonly IGenreService genreService;
@@ -13,6 +16,7 @@ public class GenresController : BaseController
         this.genreService = genreService;
     }
 
+    [HttpGet]
     public async Task<IActionResult> Index()
     {
         var genres = await genreService.GetAllAsync();

@@ -10,7 +10,6 @@ public class BookDetailsViewModel
     public string Genre { get; set; } = null!;
     public int Year { get; set; }
     public int Pages { get; set; }
-    public bool IsOwner { get; set; }
     public bool IsFavorite { get; set; }
     public bool IsRented { get; set; }
     public bool IsRentedByCurrentUser { get; set; }

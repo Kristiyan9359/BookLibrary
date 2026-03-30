@@ -2,8 +2,11 @@
 
 using BookLibrary.Services.Core.Contracts;
 using BookLibrary.ViewModels.Countries;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using static BookLibrary.Common.RoleConstants;
 
+[Authorize(Roles = Admin)]
 public class CountriesController : BaseController
 {
     private readonly ICountryService countryService;

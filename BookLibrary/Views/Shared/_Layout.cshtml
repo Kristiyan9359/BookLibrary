@@ -17,8 +17,8 @@
             <div class="container-fluid">
 
                 <a class="navbar-brand text-white fw-bold"
-                   asp-controller="Home"
-                   asp-action="Index">
+                       asp-controller="Home"
+                       asp-action="Index">
 
                     <i class="bi bi-collection-fill text-warning me-2"></i>
                     Book Library
@@ -36,12 +36,12 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
 
-                        @if (User.Identity?.IsAuthenticated == true)
+                        @if (User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-white"
-                                   asp-controller="Books"
-                                   asp-action="Index">
+                                       asp-controller="Books"
+                                       asp-action="Index">
                                     <i class="bi bi-book text-info me-1"></i>
                                     Books
                                 </a>
@@ -49,8 +49,8 @@
 
                             <li class="nav-item">
                                 <a class="nav-link text-white"
-                                   asp-controller="Authors"
-                                   asp-action="Index">
+                                       asp-controller="Authors"
+                                       asp-action="Index">
                                     <i class="bi bi-person-lines-fill text-light me-1"></i>
                                     Authors
                                 </a>
@@ -58,8 +58,8 @@
 
                             <li class="nav-item">
                                 <a class="nav-link text-white"
-                                   asp-controller="Genres"
-                                   asp-action="Index">
+                                       asp-controller="Genres"
+                                       asp-action="Index">
                                     <i class="bi bi-tags text-warning me-1"></i>
                                     Genres
                                 </a>
@@ -67,17 +67,28 @@
 
                             <li class="nav-item">
                                 <a class="nav-link text-white"
-                                   asp-controller="Countries"
-                                   asp-action="Index">
+                                       asp-controller="Countries"
+                                       asp-action="Index">
                                     <i class="bi bi-globe text-primary me-1"></i>
                                     Countries
+                                </a>
+                            </li>
+                        }
+                        else if (User.IsInRole("User"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-white"
+                                       asp-controller="Books"
+                                       asp-action="Index">
+                                    <i class="bi bi-book text-info me-1"></i>
+                                    Books
                                 </a>
                             </li>
 
                             <li class="nav-item">
                                 <a class="nav-link text-white"
-                                   asp-controller="Favorites"
-                                   asp-action="MyFavorites">
+                                       asp-controller="Favorites"
+                                       asp-action="MyFavorites">
                                     <i class="bi bi-heart text-danger me-1"></i>
                                     My Favorites
                                 </a>
@@ -85,8 +96,8 @@
 
                             <li class="nav-item">
                                 <a class="nav-link text-white"
-                                   asp-controller="BookRental"
-                                   asp-action="MyRentals">
+                                       asp-controller="BookRental"
+                                       asp-action="MyRentals">
                                     <i class="bi bi-journal-check text-info me-1"></i>
                                     My Rentals
                                 </a>
@@ -94,9 +105,9 @@
 
                             <li class="nav-item">
                                 <a class="nav-link text-white"
-                                   asp-controller="BookRental"
-                                   asp-action="History">
-                                    <i class="bi bi-clock-history text-black me-1"></i>
+                                       asp-controller="BookRental"
+                                       asp-action="History">
+                                    <i class="bi bi-clock-history me-1"></i>
                                     Rental History
                                 </a>
                             </li>
