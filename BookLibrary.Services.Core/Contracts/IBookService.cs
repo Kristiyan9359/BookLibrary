@@ -10,13 +10,13 @@ public interface IBookService
 
     Task<BookCreateViewModel> GetCreateAsync();
 
-    Task CreateAsync(BookCreateViewModel model, string ownerId);
+    Task CreateAsync(BookCreateViewModel model);
 
-    Task<BookEditViewModel?> GetEditAsync(int id, string userId);
+    Task<BookEditViewModel?> GetEditAsync(int id);
 
-    Task EditAsync(int id, BookEditViewModel model, string userId);
+    Task EditAsync(int id, BookEditViewModel model);
 
-    Task<BookDeleteViewModel?> GetDeleteAsync(int id, string userId);
+    Task<BookDeleteViewModel?> GetDeleteAsync(int id);
 
-    Task DeleteAsync(int id, string userId);
+    Task DeleteAsync(int id);
 }

@@ -20,7 +20,7 @@ public class FavoriteService : IFavoriteService
     {
         var book = await context.Books.FindAsync(bookId);
 
-        if (book == null || book.OwnerId == userId)
+        if (book == null /*|| book.OwnerId == userId*/)
         {
             return null;
         }

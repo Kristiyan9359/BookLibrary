@@ -24,13 +24,7 @@ public class ApplicationDbContext : IdentityDbContext
         base.OnModelCreating(modelBuilder);
 
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
-
-        modelBuilder.Entity<Book>()
-            .HasOne(b => b.Owner)
-            .WithMany()
-            .HasForeignKey(b => b.OwnerId)
-            .OnDelete(DeleteBehavior.Restrict);
-
+                
         modelBuilder.Entity<Book>()
             .HasOne(b => b.Author)
             .WithMany(a => a.Books)

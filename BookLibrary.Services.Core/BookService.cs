@@ -31,8 +31,8 @@ public class BookService : IBookService
                 Year = b.Year,
                 Pages = b.Pages,
                 ImageUrl = string.IsNullOrWhiteSpace(b.ImageUrl)
-                ? "/images/default-book.jpg"
-                : b.ImageUrl,
+                    ? "/images/default-book.jpg"
+                    : b.ImageUrl,
                 ReviewsCount = b.Reviews.Count,
                 AverageRating = b.Reviews.Any()
                     ? b.Reviews.Average(r => r.Rating)
@@ -48,21 +48,17 @@ public class BookService : IBookService
     public async Task<BookDetailsViewModel?> GetDetailsAsync(int id, string? userId)
     {
         var book = await context.Books
-            .Include(b => b.Author)
-            .ThenInclude(a => a.Country)
+            .Include(b => b.Author).ThenInclude(a => a.Country)
             .Include(b => b.Genre)
             .Include(b => b.Reviews)
             .Include(b => b.Favorites)
             .FirstOrDefaultAsync(b => b.Id == id);
 
         if (book == null)
-        {
             return null;
-        }
 
         bool isRented = await context.BookRentals
-            .AnyAsync(r => r.BookId == id
-                        && r.ReturnedOn == null);
+            .AnyAsync(r => r.BookId == id && r.ReturnedOn == null);
 
         bool isRentedByUser = userId != null && await context.BookRentals
             .AnyAsync(r => r.BookId == id &&
@@ -81,6 +77,7 @@ public class BookService : IBookService
             ImageUrl = string.IsNullOrWhiteSpace(book.ImageUrl)
                 ? "/images/default-book.jpg"
                 : book.ImageUrl,
+
             Reviews = book.Reviews
                 .OrderByDescending(r => r.CreatedOn)
                 .Select(r => new BookReviewViewModel
@@ -91,7 +88,6 @@ public class BookService : IBookService
                 })
                 .ToList(),
 
-            IsOwner = userId != null && book.OwnerId == userId,
             IsFavorite = userId != null && book.Favorites.Any(f => f.UserId == userId),
             IsRented = isRented,
             IsRentedByCurrentUser = isRentedByUser
@@ -103,24 +99,24 @@ public class BookService : IBookService
         return new BookCreateViewModel
         {
             Authors = await context.Authors
-            .Select(a => new SelectListItem
-            {
-                Value = a.Id.ToString(),
-                Text = a.FirstName + " " + a.LastName
-            })
-            .ToListAsync(),
+                .Select(a => new SelectListItem
+                {
+                    Value = a.Id.ToString(),
+                    Text = a.FirstName + " " + a.LastName
+                })
+                .ToListAsync(),
 
             Genres = await context.Genres
-            .Select(g => new SelectListItem
-            {
-                Value = g.Id.ToString(),
-                Text = g.Name
-            })
-            .ToListAsync()
+                .Select(g => new SelectListItem
+                {
+                    Value = g.Id.ToString(),
+                    Text = g.Name
+                })
+                .ToListAsync()
         };
     }
 
-    public async Task CreateAsync(BookCreateViewModel model, string ownerId)
+    public async Task CreateAsync(BookCreateViewModel model)
     {
         var book = new Book
         {
@@ -129,7 +125,6 @@ public class BookService : IBookService
             Pages = model.Pages,
             AuthorId = model.AuthorId,
             GenreId = model.GenreId,
-            OwnerId = ownerId,
             ImageUrl = model.ImageUrl
         };
 
@@ -137,14 +132,12 @@ public class BookService : IBookService
         await context.SaveChangesAsync();
     }
 
-    public async Task<BookEditViewModel?> GetEditAsync(int id, string userId)
+    public async Task<BookEditViewModel?> GetEditAsync(int id)
     {
         var book = await context.Books.FindAsync(id);
 
-        if (book == null || book.OwnerId != userId)
-        {
+        if (book == null)
             return null;
-        }
 
         return new BookEditViewModel
         {
@@ -153,33 +146,32 @@ public class BookService : IBookService
             Pages = book.Pages,
             AuthorId = book.AuthorId,
             GenreId = book.GenreId,
+            ImageUrl = book.ImageUrl,
 
             Authors = await context.Authors
-            .Select(a => new SelectListItem
-            {
-                Value = a.Id.ToString(),
-                Text = a.FirstName + " " + a.LastName
-            })
-            .ToListAsync(),
+                .Select(a => new SelectListItem
+                {
+                    Value = a.Id.ToString(),
+                    Text = a.FirstName + " " + a.LastName
+                })
+                .ToListAsync(),
 
             Genres = await context.Genres
-            .Select(g => new SelectListItem
-            {
-                Value = g.Id.ToString(),
-                Text = g.Name
-            })
-            .ToListAsync()
+                .Select(g => new SelectListItem
+                {
+                    Value = g.Id.ToString(),
+                    Text = g.Name
+                })
+                .ToListAsync()
         };
     }
 
-    public async Task EditAsync(int id, BookEditViewModel model, string userId)
+    public async Task EditAsync(int id, BookEditViewModel model)
     {
         var book = await context.Books.FindAsync(id);
 
-        if (book == null || book.OwnerId != userId)
-        {
-            throw new UnauthorizedAccessException();
-        }
+        if (book == null)
+            throw new InvalidOperationException("Book not found.");
 
         book.Title = model.Title;
         book.Year = model.Year;
@@ -191,7 +183,7 @@ public class BookService : IBookService
         await context.SaveChangesAsync();
     }
 
-    public async Task<BookDeleteViewModel?> GetDeleteAsync(int id, string userId)
+    public async Task<BookDeleteViewModel?> GetDeleteAsync(int id)
     {
         var book = await context.Books
             .Include(b => b.Author)
@@ -199,14 +191,7 @@ public class BookService : IBookService
             .FirstOrDefaultAsync(b => b.Id == id);
 
         if (book == null)
-        {
             return null;
-        }
-
-        if (book.OwnerId != userId)
-        {
-            return null;
-        }
 
         return new BookDeleteViewModel
         {
@@ -217,7 +202,7 @@ public class BookService : IBookService
         };
     }
 
-    public async Task DeleteAsync(int id, string userId)
+    public async Task DeleteAsync(int id)
     {
         var book = await context.Books
             .Include(b => b.Favorites)
@@ -225,9 +210,7 @@ public class BookService : IBookService
             .FirstOrDefaultAsync(b => b.Id == id);
 
         if (book == null)
-        {
             throw new InvalidOperationException("Book not found.");
-        }
 
         if (book.Rentals.Any(r => r.ReturnedOn == null))
         {
@@ -236,9 +219,7 @@ public class BookService : IBookService
         }
 
         context.Favorites.RemoveRange(book.Favorites);
-
         context.BookRentals.RemoveRange(book.Rentals);
-
         context.Books.Remove(book);
 
         await context.SaveChangesAsync();

@@ -29,9 +29,6 @@ public class Book
     public int GenreId { get; set; }
     public Genre Genre { get; set; } = null!;
 
-    public string OwnerId { get; set; } = null!;
-    public IdentityUser Owner { get; set; } = null!;
-
     public string? ImageUrl { get; set; }
 
     public virtual ICollection<Review> Reviews { get; set; }
