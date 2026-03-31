@@ -17,7 +17,7 @@
 <table class="table table-striped">
     <thead>
         <tr>
-            <th>Name</th>
+            <th>Genre Name</th>
             @if (User.IsInRole("Admin"))
             {
                 <th class="text-center">Actions</th>
@@ -29,7 +29,7 @@
         @foreach (var genre in Model)
         {
             <tr>
-                <td>@genre.Name</td>
+                <td class="fs-5">@genre.Name</td>
 
                 @if (User.IsInRole("Admin"))
                 {

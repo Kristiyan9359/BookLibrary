@@ -1,75 +1,42 @@
 ﻿@{
-    ViewData["Title"] = "Home";
+    ViewData["Title"] = "Admin Panel";
 }
 
-<div class="text-center mb-5">
+<h2 class="text-center mb-4">Admin Panel</h2>
+<hr />
 
-    <h1 class="display-4 fw-bold">
-        <i class="bi bi-collection-fill text-warning me-2"></i>
-        Welcome to Book Library
-    </h1>
+<div class="row text-center g-4">
 
-    <p class="lead text-black">
-        Discover books, leave reviews, add favorites and rent books easily.
-    </p>
-
-    <a asp-controller="Books"
-       asp-action="Index"
-       class="btn btn-primary btn-lg mt-2">
-
-        <i class="bi bi-book me-2"></i>
-        Browse Books
-    </a>
-
-</div>
-<div class="row text-center mt-5">
-
-    <div class="col-md-4">
-        <div class="card border-0 shadow h-100 bg-transparent">
-            <div class="card-body">
-
-                <i class="bi bi-book text-primary display-5"></i>
-
-                <h5 class="card-title mt-3">Explore Books</h5>
-
-                <p class="card-text text-black">
-                    Browse a rich collection of books with authors and genres.
-                </p>
-
-            </div>
-        </div>
+    <div class="col-md-3">
+        <a asp-controller="Books" asp-action="Index"
+               class="btn btn-primary w-100 py-4 shadow admin-btn">
+            <div class="fs-3">📚</div>
+            <div class="mt-2 fw-semibold">Manage Books</div>
+        </a>
     </div>
 
-    <div class="col-md-4">
-        <div class="card border-0 shadow h-100 bg-transparent">
-            <div class="card-body">
-
-                <i class="bi bi-heart-fill text-danger display-5"></i>
-
-                <h5 class="card-title mt-3">Favorites</h5>
-
-                <p class="card-text text-black">
-                    Save your favorite books and access them anytime.
-                </p>
-
-            </div>
-        </div>
+    <div class="col-md-3">
+        <a asp-controller="Authors" asp-action="Index"
+               class="btn btn-secondary w-100 py-4 shadow admin-btn">
+            <div class="fs-3">✍️</div>
+            <div class="mt-2 fw-semibold">Manage Authors</div>
+        </a>
     </div>
 
-    <div class="col-md-4">
-        <div class="card border-0 shadow h-100 bg-transparent">
-            <div class="card-body">
+    <div class="col-md-3">
+        <a asp-controller="Genres" asp-action="Index"
+               class="btn btn-warning w-100 py-4 shadow admin-btn">
+            <div class="fs-3">🏷️</div>
+            <div class="mt-2 fw-semibold">Manage Genres</div>
+        </a>
+    </div>
 
-                <i class="bi bi-journal-check text-success display-5"></i>
-
-                <h5 class="card-title mt-3">Rent Books</h5>
-
-                <p class="card-text text-black">
-                    Rent books easily and manage your rentals.
-                </p>
-
-            </div>
-        </div>
+    <div class="col-md-3">
+        <a asp-controller="Countries" asp-action="Index"
+               class="btn btn-success w-100 py-4 shadow admin-btn">
+            <div class="fs-3">🌍</div>
+            <div class="mt-2 fw-semibold">Manage Countries</div>
+        </a>
     </div>
 
 </div>

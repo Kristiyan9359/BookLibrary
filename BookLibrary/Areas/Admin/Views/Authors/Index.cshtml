@@ -17,8 +17,7 @@
 <table class="table table-striped">
     <thead>
         <tr>
-            <th>First Name</th>
-            <th>Last Name</th>
+            <th>Author Name</th>
             <th>Country</th>
             @if (User.IsInRole("Admin"))
             {
@@ -31,9 +30,13 @@
         @foreach (var author in Model)
         {
             <tr>
-                <td>@author.FirstName</td>
-                <td>@author.LastName</td>
-                <td>@author.Country</td>
+                <td class="fs-5 fw-semibold">
+                    @author.FirstName @author.LastName
+                </td>
+
+                <td class="fs-5 text-semibold">
+                    @author.Country
+                </td>
 
                 @if (User.IsInRole("Admin"))
                 {

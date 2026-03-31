@@ -17,7 +17,7 @@
     {
         <div class="col-lg-3 col-md-4 col-sm-6">
 
-            <div class="card h-100 shadow-sm">
+            <div class="card book-card h-100 shadow-sm">
 
                 <img src="@book.ImageUrl"
                      class="card-img-top"
@@ -25,10 +25,14 @@
 
                 <div class="card-body text-center">
 
-                    <h6>@book.Title</h6>
+                    <h6 class="card-title">@book.Title</h6>
 
-                    <p class="text-muted small">
+                    <p class="text-black small mb-1">
                         @book.Author
+                    </p>
+
+                    <p class="text-black small mb-2">
+                        @book.Year • @book.Genre
                     </p>
 
                     <div class="d-flex justify-content-center gap-2 mt-3">
