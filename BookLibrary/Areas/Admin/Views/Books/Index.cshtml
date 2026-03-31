@@ -1,0 +1,60 @@
+﻿@model IEnumerable<BookLibrary.ViewModels.Books.BookIndexViewModel>
+
+@{
+    ViewData["Title"] = "Books";
+}
+
+<h2 class="text-center mb-4">Books</h2>
+<hr />
+
+<a asp-action="Create" class="btn btn-success mb-4">
+    ➕ Add new book
+</a>
+
+<div class="row g-4">
+
+    @foreach (var book in Model)
+    {
+        <div class="col-lg-3 col-md-4 col-sm-6">
+
+            <div class="card h-100 shadow-sm">
+
+                <img src="@book.ImageUrl"
+                     class="card-img-top"
+                     alt="@book.Title" />
+
+                <div class="card-body text-center">
+
+                    <h6>@book.Title</h6>
+
+                    <p class="text-muted small">
+                        @book.Author
+                    </p>
+
+                    <div class="d-flex justify-content-center gap-2 mt-3">
+
+                        <a asp-action="Edit"
+                               asp-route-id="@book.Id"
+                               class="btn btn-warning btn-sm">
+                            Edit
+                        </a>
+
+                        <form asp-action="Delete"
+                              asp-route-id="@book.Id"
+                              method="get">
+
+                            <button class="btn btn-danger btn-sm">
+                                Delete
+                            </button>
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    }
+
+</div>

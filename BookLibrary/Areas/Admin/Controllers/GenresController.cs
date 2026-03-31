@@ -1,12 +1,10 @@
-﻿namespace BookLibrary.Web.Controllers;
+﻿namespace BookLibrary.Web.Areas.Admin.Controllers;
 
 using BookLibrary.Services.Core.Contracts;
 using BookLibrary.ViewModels.Genres;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using static BookLibrary.Common.RoleConstants;
 
-[Authorize(Roles = Admin)]
 public class GenresController : BaseController
 {
     private readonly IGenreService genreService;

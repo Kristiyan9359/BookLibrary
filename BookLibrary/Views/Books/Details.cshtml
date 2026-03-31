@@ -24,7 +24,6 @@
             <li class="list-group-item"><strong>Pages:</strong> @Model.Pages</li>
         </ul>
 
-        @* ── Бутони за наемане — само за User ── *@
         @if (User.IsInRole("User"))
         {
             <div class="mb-3">
@@ -78,7 +77,6 @@ else
     </ul>
 }
 
-@* ── Добавяне на ревю и любими — само за User ── *@
 @if (User.IsInRole("User"))
 {
     <hr />
@@ -119,7 +117,6 @@ else
 
 <div class="mt-4">
 
-    @* ── Edit/Delete — само за Admin ── *@
     @if (User.IsInRole("Admin"))
     {
         <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning me-2">Edit</a>

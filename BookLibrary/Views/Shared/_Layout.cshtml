@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/BookLibrary.styles.css" asp-append-version="true" />
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 </head>
 
 <body class="d-flex flex-column min-vh-100">
@@ -19,117 +22,119 @@
                 <a class="navbar-brand text-white fw-bold"
                        asp-controller="Home"
                        asp-action="Index">
-
                     <i class="bi bi-collection-fill text-warning me-2"></i>
                     Book Library
                 </a>
 
                 <button class="navbar-toggler" type="button"
                         data-bs-toggle="collapse"
-                        data-bs-target=".navbar-collapse"
-                        aria-controls="navbarSupportedContent"
-                        aria-expanded="false"
-                        aria-label="Toggle navigation">
+                        data-bs-target=".navbar-collapse">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
 
-                        @if (User.IsInRole("Admin"))
+                        @if (User.Identity?.IsAuthenticated ?? false)
                         {
-                            <li class="nav-item">
-                                <a class="nav-link text-white"
-                                       asp-controller="Books"
-                                       asp-action="Index">
-                                    <i class="bi bi-book text-info me-1"></i>
-                                    Books
-                                </a>
-                            </li>
+                            if (User.IsInRole("Admin"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-white"
+                                           asp-area="Admin"
+                                           asp-controller="Books"
+                                           asp-action="Index">
+                                        <i class="bi bi-book text-info me-1"></i>
+                                        Books
+                                    </a>
+                                </li>
 
-                            <li class="nav-item">
-                                <a class="nav-link text-white"
-                                       asp-controller="Authors"
-                                       asp-action="Index">
-                                    <i class="bi bi-person-lines-fill text-light me-1"></i>
-                                    Authors
-                                </a>
-                            </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-white"
+                                           asp-area="Admin"
+                                           asp-controller="Authors"
+                                           asp-action="Index">
+                                        <i class="bi bi-person-lines-fill me-1"></i>
+                                        Authors
+                                    </a>
+                                </li>
 
-                            <li class="nav-item">
-                                <a class="nav-link text-white"
-                                       asp-controller="Genres"
-                                       asp-action="Index">
-                                    <i class="bi bi-tags text-warning me-1"></i>
-                                    Genres
-                                </a>
-                            </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-white"
+                                           asp-area="Admin"
+                                           asp-controller="Genres"
+                                           asp-action="Index">
+                                        <i class="bi bi-tags text-warning me-1"></i>
+                                        Genres
+                                    </a>
+                                </li>
 
-                            <li class="nav-item">
-                                <a class="nav-link text-white"
-                                       asp-controller="Countries"
-                                       asp-action="Index">
-                                    <i class="bi bi-globe text-primary me-1"></i>
-                                    Countries
-                                </a>
-                            </li>
-                        }
-                        else if (User.IsInRole("User"))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-white"
-                                       asp-controller="Books"
-                                       asp-action="Index">
-                                    <i class="bi bi-book text-info me-1"></i>
-                                    Books
-                                </a>
-                            </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-white"
+                                           asp-area="Admin"
+                                           asp-controller="Countries"
+                                           asp-action="Index">
+                                        <i class="bi bi-globe text-primary me-1"></i>
+                                        Countries
+                                    </a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-white"
+                                           asp-controller="Books"
+                                           asp-action="Index">
+                                        <i class="bi bi-book text-info me-1"></i>
+                                        Books
+                                    </a>
+                                </li>
 
-                            <li class="nav-item">
-                                <a class="nav-link text-white"
-                                       asp-controller="Favorites"
-                                       asp-action="MyFavorites">
-                                    <i class="bi bi-heart text-danger me-1"></i>
-                                    My Favorites
-                                </a>
-                            </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-white"
+                                           asp-controller="Favorites"
+                                           asp-action="MyFavorites">
+                                        <i class="bi bi-heart text-danger me-1"></i>
+                                        My Favorites
+                                    </a>
+                                </li>
 
-                            <li class="nav-item">
-                                <a class="nav-link text-white"
-                                       asp-controller="BookRental"
-                                       asp-action="MyRentals">
-                                    <i class="bi bi-journal-check text-info me-1"></i>
-                                    My Rentals
-                                </a>
-                            </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-white"
+                                           asp-controller="BookRental"
+                                           asp-action="MyRentals">
+                                        <i class="bi bi-journal-check text-info me-1"></i>
+                                        My Rentals
+                                    </a>
+                                </li>
 
-                            <li class="nav-item">
-                                <a class="nav-link text-white"
-                                       asp-controller="BookRental"
-                                       asp-action="History">
-                                    <i class="bi bi-clock-history me-1"></i>
-                                    Rental History
-                                </a>
-                            </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-white"
+                                           asp-controller="BookRental"
+                                           asp-action="History">
+                                        <i class="bi bi-clock-history me-1"></i>
+                                        Rental History
+                                    </a>
+                                </li>
+                            }
                         }
                     </ul>
 
                     <partial name="_LoginPartial" />
                 </div>
             </div>
-        </nav><link rel="stylesheet"
-                    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+        </nav>
     </header>
 
     @if (TempData["SuccessMessage"] != null)
     {
-        <div class="alert alert-success text-center mb-0">
+        <div class="alert alert-success text-center mb-0 auto-dismiss">
             @TempData["SuccessMessage"]
         </div>
     }
     @if (TempData["ErrorMessage"] != null)
     {
-        <div class="alert alert-danger text-center mb-0">
+        <div class="alert alert-danger text-center mb-0 auto-dismiss">
             @TempData["ErrorMessage"]
         </div>
     }
@@ -149,6 +154,16 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script>
+            setTimeout(function () {
+                document.querySelectorAll(".auto-dismiss").forEach(function (el) {
+                    el.style.transition = "opacity 0.5s";
+                    el.style.opacity = "0";
+                    setTimeout(() => el.remove(), 500);
+                });
+            }, 3000);
+    </script>
 
     @await RenderSectionAsync("Scripts", required: false)
 

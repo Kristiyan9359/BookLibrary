@@ -1,18 +1,22 @@
-﻿@model BookLibrary.ViewModels.Books.BookEditViewModel
+﻿@model BookLibrary.ViewModels.Books.BookCreateViewModel
 
 @{
-    ViewData["Title"] = "Edit Book";
+    ViewData["Title"] = "Create Book";
 }
 
-<h2>Edit Book</h2>
+<h2>Create Book</h2>
 
-<form asp-action="Edit" method="post">
-    <input type="hidden" asp-for="Id" />
-
+<form asp-action="Create" method="post">
     <div class="mb-3">
         <label asp-for="Title" class="form-label"></label>
-        <input asp-for="Title" class="form-control" />
+        <input asp-for="Title" class="form-control" 
+               placeholder="Enter book title..." />
         <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Year" class="form-label"></label>
+        <input asp-for="Year" class="form-control" />
+        <span asp-validation-for="Year" class="text-danger"></span>
     </div>
 
     <div class="mb-3">
@@ -32,14 +36,10 @@
     </div>
 
     <div class="mb-3">
-        <label asp-for="Year" class="form-label"></label>
-        <input asp-for="Year" class="form-control" />
-        <span asp-validation-for="Year" class="text-danger"></span>
-    </div>
-
-    <div class="mb-3">
         <label asp-for="AuthorId" class="form-label"></label>
-        <select asp-for="AuthorId" asp-items="Model.Authors" class="form-select">
+        <select asp-for="AuthorId"
+                asp-items="Model.Authors"
+                class="form-select">
             <option value="">-- Select author --</option>
         </select>
         <span asp-validation-for="AuthorId" class="text-danger"></span>
@@ -47,18 +47,20 @@
 
     <div class="mb-3">
         <label asp-for="GenreId" class="form-label"></label>
-        <select asp-for="GenreId" asp-items="Model.Genres" class="form-select">
+        <select asp-for="GenreId"
+                asp-items="Model.Genres"
+                class="form-select">
             <option value="">-- Select genre --</option>
         </select>
         <span asp-validation-for="GenreId" class="text-danger"></span>
     </div>
 
-    <button type="submit" class="btn btn-primary">Save changes</button>
-
-    <a asp-action="Index" class="btn btn-secondary">
+    <button type="submit" class="btn btn-primary">
+        Create
+    </button>
+    <a asp-area="Admin" asp-controller="Books" asp-action="Index" class="btn btn-secondary ms-2">
         Cancel
     </a>
-
 </form>
 
 @section Scripts {
