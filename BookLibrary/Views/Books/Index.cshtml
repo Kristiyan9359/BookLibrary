@@ -7,12 +7,6 @@
 <h2 class="text-center mb-4">Books</h2>
 <hr />
 
-@if (User.IsInRole("Admin"))
-{
-    <a asp-action="Create" class="btn btn-success mb-4">
-        ➕ Add new book
-    </a>
-}
 
 <div class="row g-4">
 
@@ -30,11 +24,11 @@
 
                     <h6 class="card-title">@book.Title</h6>
 
-                    <p class="text-muted small mb-1">
+                    <p class="text-black small mb-1">
                         @book.Author
                     </p>
 
-                    <p class="small mb-2">
+                    <p class="text-black small mb-2">
                         @book.Year • @book.Genre
                     </p>
 

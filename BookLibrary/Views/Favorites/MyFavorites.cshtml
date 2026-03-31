@@ -9,7 +9,7 @@
 
 @if (!Model.Any())
 {
-    <p>You have not added any books to your favorites yet.</p>
+    <h5 class="text-start mb-4">You have not added any books to your favorites yet.</h5>
 }
 else
 {
@@ -19,36 +19,51 @@ else
         {
             <div class="col-md-6">
 
-                <div class="card shadow-sm border-0">
+                <div class="glass-card p-3 h-100">
 
-                    <div class="row g-0">
+                    <div class="row g-0 align-items-center">
 
                         <div class="col-4">
-
                             <img src="@book.ImageUrl"
-                                 class="img-fluid rounded-start"
+                                 class="img-fluid rounded"
                                  style="height:140px; object-fit:cover;" />
-
                         </div>
 
-                        <div class="col-8">
+                        <div class="col-8 ps-3">
 
-                            <div class="card-body">
+                            <div class="d-flex flex-column h-100 text-start">
 
-                                <h6 class="card-title">@book.Title</h6>
+                                <h6 class="text-black mb-1">
+                                    @book.Title
+                                </h6>
 
-                                <p class="text-muted small mb-2">
+                                <p class="text-black mb-2 small">
                                     @book.Author
                                 </p>
 
-                                <a asp-controller="Books"
-                                       asp-action="Details"
-                                       asp-route-id="@book.Id"
-                                       class="btn btn-sm btn-primary">
+                                <div class="mt-auto d-flex gap-2">
 
-                                    Details
+                                    <a asp-controller="Books"
+                                           asp-action="Details"
+                                           asp-route-id="@book.Id"
+                                           class="btn btn-primary btn-sm flex-fill">
+                                        Details
+                                    </a>
 
-                                </a>
+                                    <form asp-controller="Favorites"
+                                          asp-action="Toggle"
+                                          method="post"
+                                          class="flex-fill">
+
+                                        <input type="hidden" name="bookId" value="@book.Id" />
+
+                                        <button class="btn btn-outline-danger btn-sm w-100">
+                                            💔 Remove
+                                        </button>
+
+                                    </form>
+
+                                </div>
 
                             </div>
 

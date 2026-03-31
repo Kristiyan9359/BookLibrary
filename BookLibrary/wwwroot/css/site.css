@@ -139,3 +139,116 @@ main.container {
         transform: translateY(-5px);
         box-shadow: 0 12px 25px rgba(0,0,0,0.25);
     }
+
+.admin-btn {
+    transition: all 0.2s ease;
+    border-radius: 12px;
+}
+
+    .admin-btn:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+.book-card {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+    color: #fff;
+}
+
+    .book-card .card-body {
+        background: transparent;
+    }
+
+    .book-card .card-title {
+        color: #111;
+        font-weight: 600;
+    }
+
+    .book-card .card-text {
+        color: rgba(255, 255, 255, 0.75);
+    }
+
+.glass {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    color: #fff;
+}
+
+.review-card {
+    background: rgba(255,255,255,0.25);
+    backdrop-filter: blur(6px);
+    border-radius: 10px;
+    padding: 12px 15px;
+    border: 1px solid rgba(0,0,0,0.1);
+}
+
+.review-rating {
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: #000;
+}
+
+.review-date {
+    color: rgba(0,0,0,0.6);
+}
+
+.review-text {
+    color: #000;
+    line-height: 1.5;
+}
+.mb-3 form {
+    margin: 0;
+}
+
+.glass-card {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.15);
+    color: #fff;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.glass-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+}
+
+.glass-card img {
+    border-radius: 10px;
+}
+
+.form-control,
+.form-select {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.form-control,
+.form-select {
+    color: #000;
+}
+
+.form-control:focus,
+.form-select:focus {
+    background: rgba(255, 255, 255, 0.12);
+    color: #000;
+    box-shadow: none;
+}
+
+.form-control::placeholder {
+    color: #000;
+}
+.form-select option {
+    color: #000;
+    background: #fff;
+}
+.form-select {
+    appearance: none;
+}

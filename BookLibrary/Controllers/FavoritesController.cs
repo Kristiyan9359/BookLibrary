@@ -1,10 +1,7 @@
 ﻿namespace BookLibrary.Web.Controllers;
 
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
-using System.Security.Claims;
-
 using BookLibrary.Services.Core.Contracts;
+using Microsoft.AspNetCore.Mvc;
 
 public class FavoritesController : BaseController
 {
@@ -31,12 +28,23 @@ public class FavoritesController : BaseController
             ? "Book added to favorites."
             : "Book removed from favorites.";
 
+        var referer = Request.Headers["Referer"].ToString();
+
+        if (!string.IsNullOrEmpty(referer))
+        {
+            return Redirect(referer);
+        }
         return RedirectToAction("Details", "Books", new { id = bookId });
     }
 
     [HttpGet]
     public async Task<IActionResult> MyFavorites()
     {
+        if (User.Identity?.IsAuthenticated == true && User.IsInRole("Admin"))
+        {
+            return NotFound();
+        }
+
         var userId = GetUserId()!;
 
         var favorites = await favoriteService.GetUserFavoritesAsync(userId);

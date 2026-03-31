@@ -3,6 +3,7 @@ namespace BookLibrary.Web.Controllers;
 using BookLibrary.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Diagnostics;
 
 public class HomeController : BaseController
@@ -11,6 +12,14 @@ public class HomeController : BaseController
     [AllowAnonymous]
     public IActionResult Index()
     {
+        if (User.Identity?.IsAuthenticated ?? false)
+        {
+            if (User.IsInRole("Admin"))
+            {
+                return RedirectToAction("Index", "Home", new { area = "Admin" });
+            }
+        }
+
         return View();
     }
 

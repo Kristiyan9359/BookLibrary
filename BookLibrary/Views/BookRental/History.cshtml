@@ -9,7 +9,7 @@
 
 @if (!Model.Any())
 {
-    <p>You have no rental history.</p>
+    <h5 class="text-start mb-4">You have no rental history.</h5>
 }
 else
 {
@@ -19,33 +19,31 @@ else
         {
             <div class="col-md-6">
 
-                <div class="card border-0 shadow-sm">
+                <div class="glass-card p-3 h-100">
 
-                    <div class="row g-0">
+                    <div class="row g-0 align-items-center">
 
                         <div class="col-4">
-
                             <img src="@rental.ImageUrl"
-                                 class="img-fluid rounded-start"
+                                 class="img-fluid rounded"
                                  style="height:150px; object-fit:cover;" />
-
                         </div>
 
-                        <div class="col-8">
+                        <div class="col-8 ps-3">
 
-                            <div class="card-body">
+                            <div class="d-flex flex-column h-100 text-start">
 
-                                <h6 class="card-title">
+                                <h6 class="text-black mb-2">
                                     @rental.Title
                                 </h6>
 
-                                <p class="text-muted small mb-1">
-                                    Rented on:
+                                <p class="text-black mb-1 small">
+                                    <strong>Rented:</strong>
                                     @rental.RentedOn.ToString("dd.MM.yyyy")
                                 </p>
 
-                                <p class="text-muted small mb-2">
-                                    Returned on:
+                                <p class="text-black mb-0 small">
+                                    <strong>Returned:</strong>
                                     @(rental.ReturnedOn.HasValue
                                         ? rental.ReturnedOn.Value.ToString("dd.MM.yyyy")
                                         : "Still rented")

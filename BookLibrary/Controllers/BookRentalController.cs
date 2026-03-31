@@ -61,6 +61,11 @@ public class BookRentalController : BaseController
     [HttpGet]
     public async Task<IActionResult> MyRentals()
     {
+        if (User.Identity?.IsAuthenticated == true && User.IsInRole("Admin"))
+        {
+            return NotFound();
+        }
+
         var userId = GetUserId()!;
 
         var rentals = await rentalService.GetMyRentalsAsync(userId);
@@ -71,6 +76,11 @@ public class BookRentalController : BaseController
     [HttpGet]
     public async Task<IActionResult> History()
     {
+        if (User.Identity?.IsAuthenticated == true && User.IsInRole("Admin"))
+        {
+            return NotFound();
+        }
+
         var userId = GetUserId()!;
 
         var history = await rentalService.GetRentalHistoryAsync(userId);

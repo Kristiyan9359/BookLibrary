@@ -18,13 +18,16 @@ namespace BookLibrary.ViewModels.Books
         public int Pages { get; set; }
 
         [Required(ErrorMessage = "Year is required.")]
+        [Display(Name = "Publication Year")]
         [Range(BookMinYear, BookMaxYear, ErrorMessage = "The year must be between 1450 and 2100.")]
         public int Year { get; set; }
 
         [Required(ErrorMessage = "Author is requiered")]
+        [Display(Name = "Author")]
         public int AuthorId { get; set; }
 
         [Required(ErrorMessage = "Genre is requiered")]
+        [Display(Name = "Genre")]
         public int GenreId { get; set; }
 
         public string? ImageUrl { get; set; }

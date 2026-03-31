@@ -10,5 +10,6 @@ public class GenreEditViewModel
     [Required(ErrorMessage = "Genre name is required.")]
     [MinLength(GenreNameMinLength, ErrorMessage = "Genre name must be at least 2 characters long.")]
     [MaxLength(GenreNameMaxLength)]
+    [Display(Name = "Genre Name")]
     public string Name { get; set; } = null!;
 }

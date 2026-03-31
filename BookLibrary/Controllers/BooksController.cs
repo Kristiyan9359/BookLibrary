@@ -15,13 +15,24 @@ public class BooksController : BaseController
     [HttpGet]
     public async Task<IActionResult> Index()
     {
-        var books = await bookService.GetAllAsync();
-        return View(books);
+        if (User.IsInRole("Admin"))
+        {
+            return RedirectToAction("Index", "Books", new { area = "Admin" });
+        }
+
+        var model = await bookService.GetAllAsync();
+
+        return View(model);
     }
 
     [HttpGet]
     public async Task<IActionResult> Details(int id)
     {
+        if (User.Identity?.IsAuthenticated == true && User.IsInRole("Admin"))
+        {
+            return NotFound();
+        }
+
         var userId = GetUserId();
 
         var model = await bookService.GetDetailsAsync(id, userId);
