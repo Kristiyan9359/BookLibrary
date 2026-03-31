@@ -26,23 +26,29 @@ else
                         <div class="col-4">
                             <img src="@rental.ImageUrl"
                                  class="img-fluid rounded"
-                                 style="height:150px; object-fit:cover;" />
+                                 style="height:250px; object-fit:cover;" />
                         </div>
 
                         <div class="col-8 ps-3">
 
-                            <div class="d-flex flex-column h-100 text-start">
+                            <div class="d-flex flex-column text-start" style="height:250px;">
 
-                                <h6 class="text-black mb-2">
+                                <h5 class="text-black mb-2">
                                     @rental.Title
+                                </h5>
+
+                                <h6 class="text-black-50 mb-2">
+                                    @rental.Author
                                 </h6>
 
-                                <p class="text-black mb-1 small">
-                                    <strong>Rented:</strong>
-                                    @rental.RentedOn.ToString("dd.MM.yyyy")
-                                </p>
+                                <div class="my-auto">
+                                    <p class="text-black small mb-0">
+                                        <strong>Rented:</strong>
+                                        @rental.RentedOn.ToString("dd.MM.yyyy")
+                                    </p>
+                                </div>
 
-                                <p class="text-black mb-0 small">
+                                <p class="text-black small mb-0">
                                     <strong>Returned:</strong>
                                     @(rental.ReturnedOn.HasValue
                                         ? rental.ReturnedOn.Value.ToString("dd.MM.yyyy")

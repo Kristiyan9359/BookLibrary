@@ -63,11 +63,14 @@ public class BookRentalService : IBookRentalService
     public async Task<IEnumerable<RentalViewModel>> GetMyRentalsAsync(string userId)
     {
         return await context.BookRentals
+            .Include(r => r.Book)
+            .ThenInclude(b => b.Author)
             .Where(r => r.UserId == userId && r.ReturnedOn == null)
             .Select(r => new RentalViewModel
             {
                 BookId = r.BookId,
                 Title = r.Book.Title,
+                Author = r.Book.Author.FirstName + " " + r.Book.Author.LastName,
                 RentedOn = r.RentedOn,
                 ImageUrl = string.IsNullOrWhiteSpace(r.Book.ImageUrl)
                             ? "/images/default-book.jpg"
@@ -78,11 +81,14 @@ public class BookRentalService : IBookRentalService
     public async Task<IEnumerable<RentalHistoryViewModel>> GetRentalHistoryAsync(string userId)
     {
         return await context.BookRentals
+            .Include(b => b.Book)
+            .ThenInclude(r => r.Author)
             .Where(r => r.UserId == userId)
             .OrderByDescending(r => r.RentedOn)
             .Select(r => new RentalHistoryViewModel
             {
                 Title = r.Book.Title,
+                Author = r.Book.Author.FirstName + " " + r.Book.Author.LastName,
                 RentedOn = r.RentedOn,
                 ReturnedOn = r.ReturnedOn,
                 ImageUrl = string.IsNullOrWhiteSpace(r.Book.ImageUrl)

@@ -26,29 +26,22 @@ else
                         <div class="col-4">
                             <img src="@book.ImageUrl"
                                  class="img-fluid rounded"
-                                 style="height:140px; object-fit:cover;" />
+                                 style="height:250px; object-fit:cover;" />
                         </div>
 
                         <div class="col-8 ps-3">
 
-                            <div class="d-flex flex-column h-100 text-start">
+                            <div class="d-flex flex-column text-start" style="height:250px;">
 
-                                <h6 class="text-black mb-1">
+                                <h5 class="text-black mb-2">
                                     @book.Title
+                                </h5>
+
+                                <h6 class="text-black-50 mb-2">
+                                    @book.Author
                                 </h6>
 
-                                <p class="text-black mb-2 small">
-                                    @book.Author
-                                </p>
-
                                 <div class="mt-auto d-flex gap-2">
-
-                                    <a asp-controller="Books"
-                                           asp-action="Details"
-                                           asp-route-id="@book.Id"
-                                           class="btn btn-primary btn-sm flex-fill">
-                                        Details
-                                    </a>
 
                                     <form asp-controller="Favorites"
                                           asp-action="Toggle"
@@ -62,7 +55,12 @@ else
                                         </button>
 
                                     </form>
-
+                                    <a asp-controller="Books"
+                                           asp-action="Details"
+                                           asp-route-id="@book.Id"
+                                           class="btn btn-primary btn-sm flex-fill">
+                                        Details
+                                    </a>
                                 </div>
 
                             </div>
