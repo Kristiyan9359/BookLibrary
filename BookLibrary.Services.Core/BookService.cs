@@ -225,7 +225,12 @@ public class BookService : IBookService
         await context.SaveChangesAsync();
     }
 
-    public async Task<IEnumerable<BookIndexViewModel>> GetAllFilteredAsync(string? searchTerm, int? genreId, int? authorId)
+    public async Task<(IEnumerable<BookIndexViewModel>, int totalCount)> GetAllFilteredAsync(
+        string? searchTerm,
+        int? genreId,
+        int? authorId,
+        int currentPage,
+        int pageSize)
     {
         var query = context.Books
             .Include(b => b.Author)
@@ -234,21 +239,19 @@ public class BookService : IBookService
             .AsQueryable();
 
         if (!string.IsNullOrWhiteSpace(searchTerm))
-        {
             query = query.Where(b => b.Title.Contains(searchTerm));
-        }
 
         if (genreId.HasValue)
-        {
             query = query.Where(b => b.GenreId == genreId);
-        }
 
         if (authorId.HasValue)
-        {
             query = query.Where(b => b.AuthorId == authorId);
-        }
 
-        return await query
+        var totalCount = await query.CountAsync();
+
+        var books = await query
+            .Skip((currentPage - 1) * pageSize)
+            .Take(pageSize)
             .Select(b => new BookIndexViewModel
             {
                 Id = b.Id,
@@ -266,5 +269,7 @@ public class BookService : IBookService
                     : null
             })
             .ToListAsync();
+
+        return (books, totalCount);
     }
 }

@@ -10,6 +10,10 @@ public class BookSearchViewModel
 
     public int? AuthorId { get; set; }
 
+    public int CurrentPage { get; set; } = 1;
+
+    public int TotalPages { get; set; }
+
     public IEnumerable<BookIndexViewModel> Books { get; set; }
         = new List<BookIndexViewModel>();
 

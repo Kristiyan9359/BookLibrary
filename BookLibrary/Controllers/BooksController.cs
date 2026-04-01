@@ -15,7 +15,7 @@ public class BooksController : BaseController
     {
         this.bookService = bookService;
         this.genreService = genreService;
-        this.authorService = authorService; 
+        this.authorService = authorService;
     }
 
     [HttpGet]
@@ -26,11 +26,16 @@ public class BooksController : BaseController
             return RedirectToAction("Index", "Books", new { area = "Admin" });
         }
 
-        model.Books = await bookService.GetAllFilteredAsync(
-            model.SearchTerm,
-            model.GenreId,
-            model.AuthorId);
+         var (books, totalCount) = await bookService.GetAllFilteredAsync(
+         model.SearchTerm,
+         model.GenreId,
+         model.AuthorId,
+         model.CurrentPage,
+         4);
 
+        model.Books = books;
+
+        model.TotalPages = (int)Math.Ceiling(totalCount / 4.0);
         model.Genres = (await genreService.GetAllAsync())
             .Select(g => new SelectListItem
             {
