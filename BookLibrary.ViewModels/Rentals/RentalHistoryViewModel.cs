@@ -6,6 +6,10 @@ public class RentalHistoryViewModel
 
     public string Author { get; set; } = null!;
 
+    public int CurrentPage { get; set; } = 1;
+
+    public int TotalPages { get; set; }
+
     public DateTime RentedOn { get; set; }
 
     public DateTime? ReturnedOn { get; set; }

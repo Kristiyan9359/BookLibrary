@@ -74,17 +74,18 @@ public class BookRentalController : BaseController
     }
 
     [HttpGet]
-    public async Task<IActionResult> History()
+    public async Task<IActionResult> History(int currentPage = 1)
     {
-        if (User.Identity?.IsAuthenticated == true && User.IsInRole("Admin"))
-        {
-            return NotFound();
-        }
-
         var userId = GetUserId()!;
 
-        var history = await rentalService.GetRentalHistoryAsync(userId);
+        var (rentals, totalCount) = await rentalService.GetRentalHistoryAsync(
+            userId,
+            currentPage,
+            4);
 
-        return View(history);
+        ViewBag.CurrentPage = currentPage;
+        ViewBag.TotalPages = (int)Math.Ceiling(totalCount / 4.0);
+
+        return View(rentals);
     }
 }

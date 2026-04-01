@@ -67,4 +67,83 @@ else
         }
 
     </div>
+   
+}
+
+@{
+    int current = ViewBag.CurrentPage;
+    int total = ViewBag.TotalPages;
+
+    int start = Math.Max(1, current - 2);
+    int end = Math.Min(total, current + 2);
+}
+
+@if (total > 1)
+{
+    <nav class="mt-4">
+        <ul class="pagination justify-content-center">
+
+            <li class="page-item @(current == 1 ? "disabled" : "")">
+                <a class="page-link"
+                       asp-action="History"
+                       asp-route-currentPage="@(current - 1)">
+                    ◀
+                </a>
+            </li>
+
+            @if (start > 1)
+            {
+                <li class="page-item">
+                    <a class="page-link"
+                       asp-action="History"
+                       asp-route-currentPage="1">1</a>
+                </li>
+
+                @if (start > 2)
+                {
+                    <li class="page-item disabled">
+                        <span class="page-link">...</span>
+                    </li>
+                }
+            }
+
+            @for (int i = start; i <= end; i++)
+            {
+                <li class="page-item @(i == current ? "active" : "")">
+                    <a class="page-link"
+                           asp-action="History"
+                           asp-route-currentPage="@i">
+                        @i
+                    </a>
+                </li>
+            }
+
+            @if (end < total)
+            {
+                @if (end < total - 1)
+                {
+                    <li class="page-item disabled">
+                        <span class="page-link">...</span>
+                    </li>
+                }
+
+                <li class="page-item">
+                    <a class="page-link"
+                           asp-action="History"
+                           asp-route-currentPage="@total">
+                        @total
+                    </a>
+                </li>
+            }
+
+            <li class="page-item @(current == total ? "disabled" : "")">
+                <a class="page-link"
+                       asp-action="History"
+                       asp-route-currentPage="@(current + 1)">
+                    ▶
+                </a>
+            </li>
+
+        </ul>
+    </nav>
 }

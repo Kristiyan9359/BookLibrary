@@ -12,5 +12,8 @@ public interface IBookRentalService
 
     Task<IEnumerable<RentalViewModel>> GetMyRentalsAsync(string userId);
 
-    Task<IEnumerable<RentalHistoryViewModel>> GetRentalHistoryAsync(string userId);
+    Task<(IEnumerable<RentalHistoryViewModel>, int totalCount)> GetRentalHistoryAsync(
+    string userId,
+    int currentPage,
+    int pageSize);
 }

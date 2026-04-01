@@ -18,7 +18,7 @@ public class BookRentalService : IBookRentalService
     public async Task<bool> IsBookRentedAsync(int bookId)
     {
         return await context.BookRentals
-            .AnyAsync(r => r.BookId == bookId 
+            .AnyAsync(r => r.BookId == bookId
                       && r.ReturnedOn == null);
     }
 
@@ -78,13 +78,22 @@ public class BookRentalService : IBookRentalService
             })
             .ToListAsync();
     }
-    public async Task<IEnumerable<RentalHistoryViewModel>> GetRentalHistoryAsync(string userId)
+    public async Task<(IEnumerable<RentalHistoryViewModel>, int totalCount)> GetRentalHistoryAsync(
+    string userId,
+    int currentPage,
+    int pageSize)
     {
-        return await context.BookRentals
-            .Include(b => b.Book)
-            .ThenInclude(r => r.Author)
+        var query = context.BookRentals
+            .Include(r => r.Book)
+                .ThenInclude(b => b.Author)
             .Where(r => r.UserId == userId)
-            .OrderByDescending(r => r.RentedOn)
+            .OrderByDescending(r => r.RentedOn);
+
+        var totalCount = await query.CountAsync();
+
+        var rentals = await query
+            .Skip((currentPage - 1) * pageSize)
+            .Take(pageSize)
             .Select(r => new RentalHistoryViewModel
             {
                 Title = r.Book.Title,
@@ -92,9 +101,11 @@ public class BookRentalService : IBookRentalService
                 RentedOn = r.RentedOn,
                 ReturnedOn = r.ReturnedOn,
                 ImageUrl = string.IsNullOrWhiteSpace(r.Book.ImageUrl)
-                            ? "/images/default-book.jpg"
-                            : r.Book.ImageUrl
+                    ? "/images/default-book.jpg"
+                    : r.Book.ImageUrl
             })
             .ToListAsync();
+
+        return (rentals, totalCount);
     }
 }
