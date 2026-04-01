@@ -147,3 +147,54 @@ else
         </ul>
     </nav>
 }
+
+@if (Model.Any())
+{
+    <button type="button"
+            class="btn btn-danger clear-history-btn"
+            data-bs-toggle="modal"
+            data-bs-target="#clearHistoryModal">
+        🗑 Clear History
+    </button>
+}
+
+<div class="modal fade" id="clearHistoryModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+
+        <div class="modal-content text-center p-3 clean-modal">
+
+            <div class="modal-body">
+
+                <h5 class="mb-3 text-black">
+                    Clear History
+                </h5>
+
+                <p class="text-black">
+                    Are you sure you want to delete your rental history?
+                </p>
+
+                <form asp-action="ClearHistory" method="post">
+
+                    <div class="d-flex justify-content-center gap-3 mt-3">
+
+                        <button type="button"
+                                class="btn btn-secondary"
+                                data-bs-dismiss="modal">
+                            Cancel
+                        </button>
+
+                        <button type="submit"
+                                class="btn btn-danger">
+                            Yes, delete
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>

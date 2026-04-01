@@ -97,6 +97,7 @@ html, body {
     .card:hover {
         transform: translateY(-5px);
     }
+
 body {
     background-image: url('/images/library-bg.jpg');
     background-size: cover;
@@ -118,11 +119,13 @@ main.container {
     padding: 25px;
     box-shadow: 0 8px 25px rgba(0,0,0,0.2);
 }
+
 .card {
     background-color: rgba(255,255,255,0.65);
     backdrop-filter: blur(4px);
     border: none;
 }
+
 .book-card img {
     height: 320px;
     object-fit: cover;
@@ -203,6 +206,7 @@ main.container {
     color: #000;
     line-height: 1.5;
 }
+
 .mb-3 form {
     margin: 0;
 }
@@ -216,14 +220,14 @@ main.container {
     transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-.glass-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 12px 30px rgba(0,0,0,0.4);
-}
+    .glass-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+    }
 
-.glass-card img {
-    border-radius: 10px;
-}
+    .glass-card img {
+        border-radius: 10px;
+    }
 
 .form-control,
 .form-select {
@@ -235,20 +239,85 @@ main.container {
     color: #000;
 }
 
-.form-control:focus,
-.form-select:focus {
-    background: rgba(255, 255, 255, 0.12);
-    color: #000;
-    box-shadow: none;
-}
+    .form-control:focus,
+    .form-select:focus {
+        background: rgba(255, 255, 255, 0.12);
+        color: #000;
+        box-shadow: none;
+    }
 
-.form-control::placeholder {
-    color: #000;
-}
-.form-select option {
-    color: #000;
-    background: #fff;
-}
+    .form-control::placeholder {
+        color: #000;
+    }
+
+    .form-select option {
+        color: #000;
+        background: #fff;
+    }
+
 .form-select {
     appearance: none;
+}
+
+.clear-history-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 1000;
+    border-radius: 50px;
+    padding: 12px 20px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+
+
+main.container,
+.glass-card {
+    position: relative;
+    z-index: 1;
+}
+
+.modal-backdrop {
+    pointer-events: none !important;
+}
+
+.modal {
+    z-index: 1055 !important;
+}
+
+.modal-backdrop {
+    z-index: 1050 !important;
+}
+
+.modal-backdrop.show {
+    background-color: rgba(0, 0, 0, 0.4) !important;
+}
+.modal-content {
+    background: #ffffff;
+    color: #000;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+}
+
+
+.modal-content {
+    position: relative;
+    z-index: 2001;
+}
+
+
+.modal-body h5 {
+    font-weight: 600;
+}
+
+.modal-body p {
+    color: #444;
+}
+.clean-modal {
+    background: #ffffff !important;
+    color: #000 !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    opacity: 1 !important;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+    border-radius: 12px;
 }

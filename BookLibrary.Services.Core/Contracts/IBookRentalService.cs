@@ -16,4 +16,6 @@ public interface IBookRentalService
     string userId,
     int currentPage,
     int pageSize);
+
+    Task ClearHistoryAsync(string userId);
 }

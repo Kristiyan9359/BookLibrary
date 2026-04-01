@@ -88,4 +88,16 @@ public class BookRentalController : BaseController
 
         return View(rentals);
     }
+
+    [HttpPost]
+    public async Task<IActionResult> ClearHistory()
+    {
+        var userId = GetUserId()!;
+
+        await rentalService.ClearHistoryAsync(userId);
+
+        TempData["SuccessMessage"] = "History cleared successfully.";
+
+        return RedirectToAction("History");
+    }
 }

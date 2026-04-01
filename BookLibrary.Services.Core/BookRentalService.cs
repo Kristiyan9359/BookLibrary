@@ -108,4 +108,15 @@ public class BookRentalService : IBookRentalService
 
         return (rentals, totalCount);
     }
+
+    public async Task ClearHistoryAsync(string userId)
+    {
+        var rentalsToDelete = await context.BookRentals
+            .Where(r => r.UserId == userId && r.ReturnedOn != null)
+            .ToListAsync();
+
+        context.BookRentals.RemoveRange(rentalsToDelete);
+
+        await context.SaveChangesAsync();
+    }
 }
