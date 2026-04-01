@@ -1,4 +1,4 @@
-﻿@model IEnumerable<BookLibrary.ViewModels.Books.BookIndexViewModel>
+﻿@model BookLibrary.ViewModels.Books.BookSearchViewModel
 
 @{
     ViewData["Title"] = "Books";
@@ -7,58 +7,112 @@
 <h2 class="text-center mb-4">Books</h2>
 <hr />
 
+<form method="get" class="glass-box mb-4">
+
+    <div class="row g-2">
+
+        <div class="col-md-4">
+            <input name="SearchTerm"
+                   value="@Model.SearchTerm"
+                   class="form-control"
+                   placeholder="Search by title..." />
+        </div>
+
+        <div class="col-md-3">
+            <select name="GenreId" class="form-select">
+                <option value="">All Genres</option>
+                @foreach (var genre in Model.Genres)
+                {
+                    <option value="@genre.Value"
+                            selected="@(genre.Value == Model.GenreId?.ToString())">
+                        @genre.Text
+                    </option>
+                }
+            </select>
+        </div>
+
+        <div class="col-md-3">
+            <select name="AuthorId" class="form-select">
+                <option value="">All Authors</option>
+                @foreach (var author in Model.Authors)
+                {
+                    <option value="@author.Value"
+                            selected="@(author.Value == Model.AuthorId?.ToString())">
+                        @author.Text
+                    </option>
+                }
+            </select>
+        </div>
+
+        <div class="col-md-2">
+            <button class="btn btn-primary w-100">
+                Search
+            </button>
+        </div>
+
+    </div>
+
+</form>
 
 <div class="row g-4">
 
-    @foreach (var book in Model)
+    @if (!Model.Books.Any())
     {
-        <div class="col-lg-3 col-md-4 col-sm-6">
+        <h5 class="text-center">No books found.</h5>
+    }
+    else
+    {
+        @foreach (var book in Model.Books)
+        {
+            <div class="col-lg-3 col-md-4 col-sm-6">
 
-            <div class="card book-card h-100 shadow-sm">
+                <div class="card book-card h-100 shadow-sm">
 
-                <img src="@book.ImageUrl"
-                     class="card-img-top"
-                     alt="@book.Title" />
+                    <img src="@book.ImageUrl"
+                         class="card-img-top"
+                         alt="@book.Title" />
 
-                <div class="card-body text-center">
+                    <div class="card-body text-center">
 
-                    <h6 class="card-title">@book.Title</h6>
+                        <h6 class="card-title text-black">
+                            @book.Title
+                        </h6>
 
-                    <p class="text-black small mb-1">
-                        @book.Author
-                    </p>
+                        <p class="text-black small mb-1">
+                            @book.Author
+                        </p>
 
-                    <p class="text-black small mb-2">
-                        @book.Year • @book.Genre
-                    </p>
+                        <p class="text-black small mb-2">
+                            @book.Year • @book.Genre
+                        </p>
 
-                    @if (book.AverageRating.HasValue)
-                    {
-                        <span class="badge bg-success mb-2">
-                            ⭐ @book.AverageRating.Value.ToString("0.0")
-                            <small>(@book.ReviewsCount)</small>
-                        </span>
-                    }
-                    else
-                    {
-                        <span class="badge bg-secondary mb-2">
-                            No reviews
-                        </span>
-                    }
+                        @if (book.AverageRating.HasValue)
+                        {
+                            <span class="badge bg-success mb-2">
+                                ⭐ @book.AverageRating.Value.ToString("0.0")
+                                <small>(@book.ReviewsCount)</small>
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-secondary mb-2">
+                                No reviews
+                            </span>
+                        }
 
-                    <div>
-                        <a asp-action="Details"
-                               asp-route-id="@book.Id"
-                               class="btn btn-sm btn-primary">
-                            Details
-                        </a>
+                        <div class="mt-auto">
+                            <a asp-action="Details"
+                                   asp-route-id="@book.Id"
+                                   class="btn btn-sm btn-primary w-100">
+                                Details
+                            </a>
+                        </div>
+
                     </div>
 
                 </div>
 
             </div>
-
-        </div>
+        }
     }
-
 </div>

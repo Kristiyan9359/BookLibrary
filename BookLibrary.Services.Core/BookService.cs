@@ -224,4 +224,47 @@ public class BookService : IBookService
 
         await context.SaveChangesAsync();
     }
+
+    public async Task<IEnumerable<BookIndexViewModel>> GetAllFilteredAsync(string? searchTerm, int? genreId, int? authorId)
+    {
+        var query = context.Books
+            .Include(b => b.Author)
+            .Include(b => b.Genre)
+            .Include(b => b.Reviews)
+            .AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(searchTerm))
+        {
+            query = query.Where(b => b.Title.Contains(searchTerm));
+        }
+
+        if (genreId.HasValue)
+        {
+            query = query.Where(b => b.GenreId == genreId);
+        }
+
+        if (authorId.HasValue)
+        {
+            query = query.Where(b => b.AuthorId == authorId);
+        }
+
+        return await query
+            .Select(b => new BookIndexViewModel
+            {
+                Id = b.Id,
+                Title = b.Title,
+                Author = b.Author.FirstName + " " + b.Author.LastName,
+                Genre = b.Genre.Name,
+                Year = b.Year,
+                Pages = b.Pages,
+                ImageUrl = string.IsNullOrWhiteSpace(b.ImageUrl)
+                    ? "/images/default-book.jpg"
+                    : b.ImageUrl,
+                ReviewsCount = b.Reviews.Count,
+                AverageRating = b.Reviews.Any()
+                    ? b.Reviews.Average(r => r.Rating)
+                    : null
+            })
+            .ToListAsync();
+    }
 }

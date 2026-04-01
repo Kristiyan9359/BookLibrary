@@ -1,26 +1,49 @@
 ﻿namespace BookLibrary.Web.Controllers;
 
 using BookLibrary.Services.Core.Contracts;
+using BookLibrary.ViewModels.Books;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 public class BooksController : BaseController
 {
     private readonly IBookService bookService;
+    private readonly IGenreService genreService;
+    private readonly IAuthorService authorService;
 
-    public BooksController(IBookService bookService)
+    public BooksController(IBookService bookService, IGenreService genreService, IAuthorService authorService)
     {
         this.bookService = bookService;
+        this.genreService = genreService;
+        this.authorService = authorService; 
     }
 
     [HttpGet]
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(BookSearchViewModel model)
     {
         if (User.IsInRole("Admin"))
         {
             return RedirectToAction("Index", "Books", new { area = "Admin" });
         }
 
-        var model = await bookService.GetAllAsync();
+        model.Books = await bookService.GetAllFilteredAsync(
+            model.SearchTerm,
+            model.GenreId,
+            model.AuthorId);
+
+        model.Genres = (await genreService.GetAllAsync())
+            .Select(g => new SelectListItem
+            {
+                Value = g.Id.ToString(),
+                Text = g.Name
+            });
+
+        model.Authors = (await authorService.GetAllAsync())
+            .Select(a => new SelectListItem
+            {
+                Value = a.Id.ToString(),
+                Text = a.FirstName + " " + a.LastName
+            });
 
         return View(model);
     }

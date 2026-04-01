@@ -19,4 +19,6 @@ public interface IBookService
     Task<BookDeleteViewModel?> GetDeleteAsync(int id);
 
     Task DeleteAsync(int id);
+
+    Task<IEnumerable<BookIndexViewModel>> GetAllFilteredAsync(string? searchTerm, int? genreId, int? authorId);
 }
