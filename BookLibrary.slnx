@@ -9,6 +9,9 @@
   <Folder Name="/Solution Items/">
     <File Path="README.md" />
   </Folder>
+  <Folder Name="/Tests/">
+    <Project Path="BookLibrary.Tests/BookLibrary.Tests.csproj" Id="58d06341-c369-4941-8c68-d5fb56e435a2" />
+  </Folder>
   <Folder Name="/WEB/">
     <Project Path="BookLibrary.ViewModels/BookLibrary.ViewModels.csproj" Id="02133c48-6e2f-49de-a290-6ffec04e710e" />
     <Project Path="BookLibrary/BookLibrary.Web.csproj" />

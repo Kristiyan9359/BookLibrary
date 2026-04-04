@@ -1,10 +1,10 @@
-﻿using BookLibrary.Data;
+﻿namespace BookLibrary.Services.Core;
+
+using BookLibrary.Data;
 using BookLibrary.Data.Models;
 using BookLibrary.Services.Core.Contracts;
 using BookLibrary.ViewModels.Rentals;
 using Microsoft.EntityFrameworkCore;
-
-namespace BookLibrary.Services.Core;
 
 public class BookRentalService : IBookRentalService
 {
