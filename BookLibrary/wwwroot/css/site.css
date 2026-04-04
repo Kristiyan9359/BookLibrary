@@ -1,5 +1,9 @@
 html {
     font-size: 14px;
+    position: relative;
+    min-height: 100%;
+    height: 100%;
+    margin: 0;
 }
 
 @media (min-width: 768px) {
@@ -8,32 +12,29 @@ html {
     }
 }
 
+body {
+    margin-bottom: 60px;
+    height: 100%;
+    background-image: url('/images/library-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
     box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
-html {
-    position: relative;
-    min-height: 100%;
-}
-
-body {
-    margin-bottom: 60px;
-}
+/* ── Navbar ── */
 
 .navbar-brand {
     font-weight: 600;
     letter-spacing: 0.5px;
 }
 
-.footer {
-    font-size: 0.9rem;
-}
-
-html, body {
-    height: 100%;
-    margin: 0;
-}
+    .navbar-brand i {
+        font-size: 1.4rem;
+    }
 
 .navbar-harbor {
     background-color: #6b7c85;
@@ -43,10 +44,6 @@ html, body {
     .navbar-harbor .nav-link {
         color: #ffffff;
     }
-
-        .navbar-harbor .nav-link:hover {
-            color: #e2e8eb;
-        }
 
     .navbar-harbor .navbar-brand {
         font-weight: 600;
@@ -61,6 +58,23 @@ html, body {
         filter: invert(1);
     }
 
+    .navbar-harbor .nav-link {
+        transition: all 0.2s ease;
+    }
+
+        .navbar-harbor .nav-link:hover {
+            transform: translateY(-2px);
+            color: #ffc107 !important;
+        }
+
+        .navbar-harbor .nav-link i {
+            transition: transform 0.2s ease;
+        }
+
+        .navbar-harbor .nav-link:hover i {
+            transform: scale(1.2);
+        }
+
 .nav-link:hover {
     color: #ffc107 !important;
 }
@@ -69,88 +83,35 @@ html, body {
     font-size: 1.1rem;
 }
 
-.navbar-harbor .nav-link {
-    transition: all 0.2s ease;
+/* ── Footer ── */
+
+.footer {
+    font-size: 0.9rem;
 }
 
-    .navbar-harbor .nav-link:hover {
-        transform: translateY(-2px);
-        color: #ffc107 !important;
-    }
+/* ── Main container ── */
 
-    .navbar-harbor .nav-link i {
-        transition: transform 0.2s ease;
-    }
-
-    .navbar-harbor .nav-link:hover i {
-        transform: scale(1.2);
-    }
-
-.navbar-brand i {
-    font-size: 1.4rem;
+main.container {
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(6px);
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    position: relative;
+    z-index: 1;
 }
+
+/* ── Cards ── */
 
 .card {
+    background-color: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(4px);
+    border: none;
     transition: transform 0.2s ease;
 }
 
     .card:hover {
         transform: translateY(-5px);
-    }
-
-body {
-    background-image: url('/images/library-bg.jpg');
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-}
-
-main.container {
-    background-color: rgba(255, 255, 255, 0.6);
-    padding: 25px;
-    border-radius: 10px;
-}
-
-
-main.container {
-    background: rgba(255,255,255,0.55);
-    backdrop-filter: blur(6px);
-    border-radius: 12px;
-    padding: 25px;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-}
-
-.card {
-    background-color: rgba(255,255,255,0.65);
-    backdrop-filter: blur(4px);
-    border: none;
-}
-
-.book-card img {
-    height: 320px;
-    object-fit: cover;
-}
-
-.book-card {
-    background: rgba(255,255,255,0.7);
-    backdrop-filter: blur(4px);
-    border: none;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-    .book-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 12px 25px rgba(0,0,0,0.25);
-    }
-
-.admin-btn {
-    transition: all 0.2s ease;
-    border-radius: 12px;
-}
-
-    .admin-btn:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
     }
 
 .book-card {
@@ -160,7 +121,19 @@ main.container {
     border: 1px solid rgba(255, 255, 255, 0.1);
     overflow: hidden;
     color: #fff;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
+
+    .book-card img {
+        height: 320px;
+        object-fit: cover;
+        border-radius: 10px;
+    }
+
+    .book-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25);
+    }
 
     .book-card .card-body {
         background: transparent;
@@ -175,6 +148,28 @@ main.container {
         color: rgba(255, 255, 255, 0.75);
     }
 
+.glass-card {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #fff;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    position: relative;
+    z-index: 1;
+}
+
+    .glass-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .glass-card img {
+        border-radius: 10px;
+    }
+
+/* ── Glass utility ── */
+
 .glass {
     background: rgba(255, 255, 255, 0.08);
     backdrop-filter: blur(10px);
@@ -184,12 +179,26 @@ main.container {
     color: #fff;
 }
 
+/* ── Admin buttons ── */
+
+.admin-btn {
+    transition: all 0.2s ease;
+    border-radius: 12px;
+}
+
+    .admin-btn:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+/* ── Reviews ── */
+
 .review-card {
-    background: rgba(255,255,255,0.25);
+    background: rgba(255, 255, 255, 0.25);
     backdrop-filter: blur(6px);
     border-radius: 10px;
     padding: 12px 15px;
-    border: 1px solid rgba(0,0,0,0.1);
+    border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .review-rating {
@@ -199,7 +208,7 @@ main.container {
 }
 
 .review-date {
-    color: rgba(0,0,0,0.6);
+    color: rgba(0, 0, 0, 0.6);
 }
 
 .review-text {
@@ -207,35 +216,15 @@ main.container {
     line-height: 1.5;
 }
 
+/* ── Forms ── */
+
 .mb-3 form {
     margin: 0;
 }
 
-.glass-card {
-    background: rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(12px);
-    border-radius: 12px;
-    border: 1px solid rgba(255,255,255,0.15);
-    color: #fff;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-
-    .glass-card:hover {
-        transform: translateY(-6px);
-        box-shadow: 0 12px 30px rgba(0,0,0,0.4);
-    }
-
-    .glass-card img {
-        border-radius: 10px;
-    }
-
 .form-control,
 .form-select {
     background: rgba(255, 255, 255, 0.08);
-}
-
-.form-control,
-.form-select {
     color: #000;
 }
 
@@ -259,6 +248,8 @@ main.container {
     appearance: none;
 }
 
+/* ── Clear history button ── */
+
 .clear-history-btn {
     position: fixed;
     bottom: 30px;
@@ -266,44 +257,32 @@ main.container {
     z-index: 1000;
     border-radius: 50px;
     padding: 12px 20px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
-
-main.container,
-.glass-card {
-    position: relative;
-    z-index: 1;
-}
+/* ── Modals ── */
 
 .modal-backdrop {
     pointer-events: none !important;
+    z-index: 1050 !important;
 }
+
+    .modal-backdrop.show {
+        background-color: rgba(0, 0, 0, 0.4) !important;
+    }
 
 .modal {
     z-index: 1055 !important;
 }
 
-.modal-backdrop {
-    z-index: 1050 !important;
-}
-
-.modal-backdrop.show {
-    background-color: rgba(0, 0, 0, 0.4) !important;
-}
 .modal-content {
     background: #ffffff;
     color: #000;
     border-radius: 12px;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.4);
-}
-
-
-.modal-content {
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
     position: relative;
     z-index: 2001;
 }
-
 
 .modal-body h5 {
     font-weight: 600;
@@ -312,12 +291,13 @@ main.container,
 .modal-body p {
     color: #444;
 }
+
 .clean-modal {
     background: #ffffff !important;
     color: #000 !important;
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
     opacity: 1 !important;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
     border-radius: 12px;
 }

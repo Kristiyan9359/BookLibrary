@@ -4,7 +4,7 @@
     ViewData["Title"] = "Delete Author";
 }
 
-<h2 class="text-center text-danger">@ViewData["Title"]</h2>
+<h1 class="text-center text-danger">@ViewData["Title"]</h1>
 <hr />
 
 <div class="alert alert-warning text-center">
@@ -14,9 +14,8 @@
 <div class="card">
     <div class="card-body">
 
-        <p><strong>First Name:</strong> @Model.FirstName</p>
-        <p><strong>Last Name:</strong> @Model.LastName</p>
-        <p><strong>Country:</strong> @Model.Country</p>
+        <h4> Author: <strong>@Model.FirstName @Model.LastName</strong></h4>
+        <h5>From: <strong>@Model.Country</strong> </h5>
 
         <form asp-action="DeleteConfirmed" method="post">
             <input type="hidden" asp-for="Id" />
