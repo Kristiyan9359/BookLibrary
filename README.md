@@ -1,107 +1,103 @@
-# BookLibrary
+# 📚 Book Library
 
-## About the Project
+## 📖 About the Project
 
-BookLibrary is a web application built with ASP.NET Core MVC (.NET 8).
-The idea of the project is to allow registered users to create and
-manage books, write reviews, and keep a list of favorite books.
+Book Library is a web application built with ASP.NET Core MVC
+(.NET 8).\
+It allows users to explore books, manage personal collections, write
+reviews, and rent books.
 
+The application demonstrates a clean architecture, separation of
+concerns, and implementation of real-world business logic with a focus
+on maintainability and scalability.
 
 ------------------------------------------------------------------------
 
-## Technologies Used
+## 🚀 Features
 
--   .NET 8
+### 📚 Books
+- Browse all books with pagination
+- Search books by title
+- Filter books by genre and author
+- View detailed information for each book
+
+### ❤️ Favorites
+- Add and remove books from favorites
+- Personal favorites list for each user
+
+### 📦 Rentals
+- Rent available books
+- Return rented books
+
+### 📜 Rental History
+- View full rental history
+- Pagination support
+- Clear history functionality (preserves active rentals)
+
+### ⭐ Reviews
+- Add reviews to books
+- Rating system (1–5)
+- Reviews displayed in book details
+
+### 🔐 Authentication & Roles
+- User registration and login
+- Role-based access (User / Admin)
+
+### 🛠️ Admin Area
+- Manage books, authors, genres and countries
+- Separate admin area using ASP.NET MVC Areas
+
+---
+
+## ⚙️ Business Rules
+
+- A book cannot be rented if it is already rented
+- Only the user who rented a book can return it
+- Active rentals cannot be removed when clearing history
+- A book cannot be deleted if it is currently rented
+- A country cannot be deleted if it is assigned to any author
+- A genre cannot be deleted if it is assigned to any book
+- An author cannot be deleted if they have associated books
+
+------------------------------------------------------------------------
+
+## 🏗️ Architecture
+
 -   ASP.NET Core MVC
+-   Service Layer
 -   Entity Framework Core
--   SQL Server
--   ASP.NET Core Identity
--   Bootstrap
--   Git / GitHub
+-   ASP.NET Identity
+-   Dependency Injection
 
 ------------------------------------------------------------------------
 
-## Project Structure
+## 🧪 Testing
 
-The solution is separated into several layers:
-
--   **BookLibrary.Web** -- Controllers, Views, ViewModels, Identity
--   **BookLibrary.Services.Core** -- Business logic
--   **BookLibrary.Services.Core.Contracts** -- Service interfaces
--   **BookLibrary.Data** -- DbContext and entity models
--   **BookLibrary.Common** -- Validation constants
-
-Controllers do not access the database directly. All business logic is
-handled through services.
+The business logic is covered with unit tests using: - xUnit - EF Core
+InMemory Database
 
 ------------------------------------------------------------------------
 
-## Main Functionalities
+## 🗄️ Database
 
-### Books
-
--   Create a book
--   View all books
--   View book details
--   Edit book (only by its owner)
--   Delete book (only by its owner)
-
-### Reviews
-
--   Add a review to a book
--   Rating validation (1 to 5)
--   Reviews are shown in the book details page
-
-### Favorites
-
--   Add or remove a book from favorites
--   View personal favorites list
--   Users cannot favorite their own books
+-   Microsoft SQL Server
+-   Entity Framework Core
 
 ------------------------------------------------------------------------
 
-## Authentication & Authorization
+## 🔐 Authentication & Authorization
 
-The application uses ASP.NET Core Identity.
+-   User registration and login
+-   Roles: User / Administrator
 
--   Users can register and log in
--   Only authenticated users can access books and favorites
--   Only the owner of a book can edit or delete it
--   UI elements are conditionally rendered based on authentication
+### 🔑 Admin Credentials
 
-------------------------------------------------------------------------
-
-## Validation
-
-Validation is implemented using:
-
--   DataAnnotations
--   Range attributes
--   Required attributes
--   Shared validation constants
--   Client-side validation
-
-All important checks are also validated on the server side.
+Email: admin@booklibrary.com\
+Password: Admin123!
 
 ------------------------------------------------------------------------
 
-## Database Design
-
-The main entities are:
-
--   Book
--   Author
--   Genre
--   Review
--   Favorite
--   IdentityUser
-
-Entity Framework Core is used for managing relationships and database
-operations.
-
-------------------------------------------------------------------------
-
-## How to Run the Project
+## ⚙️ How to Run the Project
 
 1.  Clone the repository.
 2.  Open the solution in Visual Studio.
@@ -122,8 +118,34 @@ Example:
 
 6.  Run the project.
 
-After that, you can register a new user or use the demo user and start using the application.
+------------------------------------------------------------------------
 
-To log in with the demo user, use the email "demo@booklibrary.com" and the password "Demo123!".
+## 📸 Screenshots
+
+### 🏠 Home Page
+![Home](Screenshots/home.png)
+
+### 📚 Books Page
+![Books](Screenshots/books.png)
+
+### 🛠️ Admin Panel
+![Admin](Screenshots/admin.png)
+
+------------------------------------------------------------------------
+
+## 🧰 Technologies
+
+-   ASP.NET Core (.NET 8)
+-   EF Core
+-   SQL Server
+-   Bootstrap
+-   xUnit
+
+
+------------------------------------------------------------------------
+
+## 👨‍💻 Author
+
+### Kristiyan Kamboshev
 
 ------------------------------------------------------------------------
