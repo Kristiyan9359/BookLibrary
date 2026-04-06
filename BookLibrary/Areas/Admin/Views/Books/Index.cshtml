@@ -4,61 +4,74 @@
     ViewData["Title"] = "Books";
 }
 
-<h2 class="text-center mb-4">Books</h2>
-<hr />
+<div class="glass-card p-4">
 
-<a asp-action="Create" class="btn btn-success mb-4">
-    ➕ Add new book
-</a>
+    <div class="d-flex justify-content-between align-items-center mb-4">
 
-<div class="row g-4">
+        <h2 class="mb-0 fw-bold text-dark">
+            <i class="bi bi-book me-2"></i> Books
+        </h2>
 
-    @foreach (var book in Model)
-    {
-        <div class="col-lg-3 col-md-4 col-sm-6">
+        @if (User.IsInRole("Admin"))
+        {
+            <a asp-action="Create" class="btn btn-success px-3">
+                <i class="bi bi-plus-circle"></i> Add Book
+            </a>
+        }
 
-            <div class="card book-card h-100 shadow-sm">
+    </div>
 
-                <img src="@book.ImageUrl"
-                     class="card-img-top"
-                     alt="@book.Title" />
+    <div class="row g-4">
 
-                <div class="card-body text-center">
+        @foreach (var book in Model)
+        {
+            <div class="col-lg-3 col-md-4 col-sm-6">
 
-                    <h6 class="card-title">@book.Title</h6>
+                <div class="card book-card h-100 shadow-sm">
 
-                    <p class="text-black small mb-1">
-                        @book.Author
-                    </p>
+                    <img src="@book.ImageUrl"
+                         class="card-img-top"
+                         alt="@book.Title" />
 
-                    <p class="text-black small mb-2">
-                        @book.Year • @book.Genre
-                    </p>
+                    <div class="card-body text-center">
 
-                    <div class="d-flex justify-content-center gap-2 mt-3">
+                        <h6 class="card-title fw-bold">
+                            @book.Title
+                        </h6>
 
-                        <a asp-action="Edit"
-                               asp-route-id="@book.Id"
-                               class="btn btn-warning btn-sm">
-                            Edit
-                        </a>
+                        <p class="text-black small mb-1">
+                            <i class="bi bi-person me-1"></i>
+                            @book.Author
+                        </p>
 
-                        <form asp-action="Delete"
-                              asp-route-id="@book.Id"
-                              method="get">
+                        <p class="text-black small mb-2">
+                            <i class="bi bi-calendar me-1"></i>
+                            @book.Year • @book.Genre
+                        </p>
 
-                            <button class="btn btn-danger btn-sm">
-                                Delete
-                            </button>
-                        </form>
+                        <div class="d-flex justify-content-center gap-2 mt-3">
+
+                            <a asp-action="Edit"
+                                   asp-route-id="@book.Id"
+                                   class="btn btn-warning btn-sm">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+
+                            <a asp-action="Delete"
+                                   asp-route-id="@book.Id"
+                                   class="btn btn-danger btn-sm">
+                                <i class="bi bi-trash"></i>
+                            </a>
+
+                        </div>
 
                     </div>
 
                 </div>
 
             </div>
+        }
 
-        </div>
-    }
+    </div>
 
 </div>

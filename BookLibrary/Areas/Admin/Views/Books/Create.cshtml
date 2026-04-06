@@ -4,65 +4,108 @@
     ViewData["Title"] = "Create Book";
 }
 
-<h2>Create Book</h2>
+<div class="d-flex justify-content-center align-items-center" style="min-height: 85vh;">
 
-<form asp-action="Create" method="post">
-    <div class="mb-3">
-        <label asp-for="Title" class="form-label"></label>
-        <input asp-for="Title" class="form-control" 
-               placeholder="Enter book title..." />
-        <span asp-validation-for="Title" class="text-danger"></span>
-    </div>
-    <div class="mb-3">
-        <label asp-for="Year" class="form-label"></label>
-        <input asp-for="Year" class="form-control" />
-        <span asp-validation-for="Year" class="text-danger"></span>
+    <div class="glass-card p-4" style="max-width: 600px; width: 100%;">
+
+        <h2 class="text-primary text-center mb-4 fw-bold">
+            📕 Create Book
+        </h2>
+
+        <form asp-action="Create" method="post">
+
+            <div class="mb-3">
+                <label asp-for="Title" class="form-label fw-bold text-dark"></label>
+                <input asp-for="Title"
+                       class="form-control"
+                       placeholder="Enter book title..." />
+                <span asp-validation-for="Title" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Year" class="form-label fw-bold text-dark"></label>
+                <input asp-for="Year" class="form-control" />
+                <span asp-validation-for="Year" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Pages" class="form-label fw-bold text-dark"></label>
+                <input asp-for="Pages" class="form-control" />
+                <span asp-validation-for="Pages" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="ImageUrl" class="form-label fw-bold text-dark">
+                    Book Cover URL
+                </label>
+                <input asp-for="ImageUrl"
+                       class="form-control"
+                       placeholder="Paste image URL..." />
+                <span asp-validation-for="ImageUrl" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="AuthorId" class="form-label fw-bold text-dark"></label>
+                <select asp-for="AuthorId"
+                        asp-items="Model.Authors"
+                        class="form-select">
+                    <option value="">-- Select author --</option>
+                </select>
+                <span asp-validation-for="AuthorId" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="GenreId" class="form-label fw-bold text-dark"></label>
+                <select asp-for="GenreId"
+                        asp-items="Model.Genres"
+                        class="form-select">
+                    <option value="">-- Select genre --</option>
+                </select>
+                <span asp-validation-for="GenreId" class="text-danger small"></span>
+            </div>
+
+            <!-- OPTIONAL PREVIEW -->
+            <div id="preview-container" class="text-center mb-3" style="display:none;">
+                <img id="preview-image"
+                     style="max-height:200px; border-radius:10px;" />
+            </div>
+
+            <div class="d-flex justify-content-center gap-3 mt-4">
+
+                <button type="submit" class="btn btn-primary px-4">
+                    Create
+                </button>
+
+                <a asp-area="Admin"
+                       asp-controller="Books"
+                       asp-action="Index"
+                       class="btn btn-secondary px-4">
+                    Cancel
+                </a>
+
+            </div>
+
+        </form>
+
     </div>
 
-    <div class="mb-3">
-        <label asp-for="Pages" class="form-label"></label>
-        <input asp-for="Pages" class="form-control" />
-        <span asp-validation-for="Pages" class="text-danger"></span>
-    </div>
-
-    <div class="mb-3">
-        <label asp-for="ImageUrl" class="form-label">
-            Book Cover URL
-        </label>
-        <input asp-for="ImageUrl"
-               class="form-control"
-               placeholder="Paste image URL..." />
-        <span asp-validation-for="ImageUrl" class="text-danger"></span>
-    </div>
-
-    <div class="mb-3">
-        <label asp-for="AuthorId" class="form-label"></label>
-        <select asp-for="AuthorId"
-                asp-items="Model.Authors"
-                class="form-select">
-            <option value="">-- Select author --</option>
-        </select>
-        <span asp-validation-for="AuthorId" class="text-danger"></span>
-    </div>
-
-    <div class="mb-3">
-        <label asp-for="GenreId" class="form-label"></label>
-        <select asp-for="GenreId"
-                asp-items="Model.Genres"
-                class="form-select">
-            <option value="">-- Select genre --</option>
-        </select>
-        <span asp-validation-for="GenreId" class="text-danger"></span>
-    </div>
-
-    <button type="submit" class="btn btn-primary">
-        Create
-    </button>
-    <a asp-area="Admin" asp-controller="Books" asp-action="Index" class="btn btn-secondary ms-2">
-        Cancel
-    </a>
-</form>
+</div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        const imageInput = document.querySelector('[name="ImageUrl"]');
+        const preview = document.getElementById('preview-image');
+        const container = document.getElementById('preview-container');
+
+        imageInput.addEventListener('input', function () {
+            if (this.value) {
+                preview.src = this.value;
+                container.style.display = 'block';
+            } else {
+                container.style.display = 'none';
+            }
+        });
+    </script>
 }

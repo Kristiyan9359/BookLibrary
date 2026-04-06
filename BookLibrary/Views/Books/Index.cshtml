@@ -4,10 +4,19 @@
     ViewData["Title"] = "Books";
 }
 
-<h2 class="text-center mb-4">Books</h2>
-<hr />
+<div class="glass-card p-4 mb-4">
 
-<form method="get" class="glass-box mb-4">
+    <div class="d-flex justify-content-between align-items-center">
+
+        <h2 class="mb-0 fw-bold text-dark">
+            <i class="bi bi-book me-2"></i> Books
+        </h2>
+
+    </div>
+
+</div>
+
+<form method="get" class="glass-card p-3 mb-4">
 
     <div class="row g-2">
 
@@ -46,7 +55,7 @@
 
         <div class="col-md-2">
             <button class="btn btn-primary w-100">
-                Search
+                <i class="bi bi-search"></i> Search
             </button>
         </div>
 
@@ -58,7 +67,19 @@
 
     @if (!Model.Books.Any())
     {
-        <h5 class="text-center">No books found.</h5>
+        <div class="text-center glass-card p-5">
+
+            <i class="bi bi-book text-muted" style="font-size: 2rem;"></i>
+
+            <h5 class="mt-3 text-dark">
+                No books found
+            </h5>
+
+            <p class="text-muted">
+                Try adjusting your search or filters
+            </p>
+
+        </div>
     }
     else
     {
@@ -74,15 +95,16 @@
 
                     <div class="card-body text-center">
 
-                        <h6 class="card-title text-black">
+                        <h6 class="card-title fw-bold text-black book-title">
                             @book.Title
                         </h6>
 
                         <p class="text-black small mb-1">
-                            @book.Author
+                            <i class="bi bi-person me-1"></i> @book.Author
                         </p>
 
                         <p class="text-black small mb-2">
+                            <i class="bi bi-calendar me-1"></i>
                             @book.Year • @book.Genre
                         </p>
 
@@ -104,7 +126,7 @@
                             <a asp-action="Details"
                                    asp-route-id="@book.Id"
                                    class="btn btn-sm btn-primary w-100">
-                                Details
+                                <i class="bi bi-eye"></i> Details
                             </a>
                         </div>
 
@@ -115,6 +137,7 @@
             </div>
         }
     }
+
 </div>
 
 @{

@@ -4,62 +4,82 @@
     ViewData["Title"] = "Edit Book";
 }
 
-<h1 class="text-center text-warning">@ViewData["Title"]</h1>
+<div class="d-flex justify-content-center align-items-center" style="min-height: 85vh;">
 
-<form asp-controller="Books" asp-action="Edit" method="post">
-    <input type="hidden" asp-for="Id" />
+    <div class="glass-card p-4" style="max-width: 600px; width: 100%;">
 
-    <div class="mb-3">
-        <label asp-for="Title" class="form-label"></label>
-        <input asp-for="Title" class="form-control" />
-        <span asp-validation-for="Title" class="text-danger"></span>
+        <h2 class="text-center mb-4 fw-bold" style="color: orange;">
+            <i class="bi bi-pencil-square"></i> Edit Book
+        </h2>
+
+        <form asp-controller="Books" asp-action="Edit" method="post">
+
+            <input type="hidden" asp-for="Id" />
+
+            <div class="mb-3">
+                <label asp-for="Title" class="form-label fw-bold text-dark"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Pages" class="form-label fw-bold text-dark"></label>
+                <input asp-for="Pages" class="form-control" />
+                <span asp-validation-for="Pages" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="ImageUrl" class="form-label fw-bold text-dark">
+                    Book Cover URL
+                </label>
+                <input asp-for="ImageUrl"
+                       class="form-control"
+                       placeholder="Paste image URL..." />
+                <span asp-validation-for="ImageUrl" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Year" class="form-label fw-bold text-dark"></label>
+                <input asp-for="Year" class="form-control" />
+                <span asp-validation-for="Year" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="AuthorId" class="form-label fw-bold text-dark"></label>
+                <select asp-for="AuthorId" asp-items="Model.Authors" class="form-select">
+                    <option value="">-- Select author --</option>
+                </select>
+                <span asp-validation-for="AuthorId" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="GenreId" class="form-label fw-bold text-dark"></label>
+                <select asp-for="GenreId" asp-items="Model.Genres" class="form-select">
+                    <option value="">-- Select genre --</option>
+                </select>
+                <span asp-validation-for="GenreId" class="text-danger small"></span>
+            </div>
+
+            <div class="d-flex justify-content-center gap-3 mt-4">
+
+                <button type="submit" class="btn btn-warning px-4">
+                    Save
+                </button>
+
+                <a asp-area="Admin"
+                       asp-controller="Books"
+                       asp-action="Index"
+                       class="btn btn-secondary px-4">
+                    Cancel
+                </a>
+
+            </div>
+
+        </form>
+
     </div>
 
-    <div class="mb-3">
-        <label asp-for="Pages" class="form-label"></label>
-        <input asp-for="Pages" class="form-control" />
-        <span asp-validation-for="Pages" class="text-danger"></span>
-    </div>
-
-    <div class="mb-3">
-        <label asp-for="ImageUrl" class="form-label">
-            Book Cover URL
-        </label>
-        <input asp-for="ImageUrl"
-               class="form-control"
-               placeholder="Paste image URL..." />
-        <span asp-validation-for="ImageUrl" class="text-danger"></span>
-    </div>
-
-    <div class="mb-3">
-        <label asp-for="Year" class="form-label"></label>
-        <input asp-for="Year" class="form-control" />
-        <span asp-validation-for="Year" class="text-danger"></span>
-    </div>
-
-    <div class="mb-3">
-        <label asp-for="AuthorId" class="form-label"></label>
-        <select asp-for="AuthorId" asp-items="Model.Authors" class="form-select">
-            <option value="">-- Select author --</option>
-        </select>
-        <span asp-validation-for="AuthorId" class="text-danger"></span>
-    </div>
-
-    <div class="mb-3">
-        <label asp-for="GenreId" class="form-label"></label>
-        <select asp-for="GenreId" asp-items="Model.Genres" class="form-select">
-            <option value="">-- Select genre --</option>
-        </select>
-        <span asp-validation-for="GenreId" class="text-danger"></span>
-    </div>
-
-    <button type="submit" class="btn btn-primary">Save changes</button>
-
-    <a asp-area="Admin" asp-controller="Books" asp-action="Index" class="btn btn-secondary ms-2">
-        Cancel
-    </a>
-
-</form>
+</div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

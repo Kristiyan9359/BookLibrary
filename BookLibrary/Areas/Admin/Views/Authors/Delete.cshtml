@@ -4,30 +4,48 @@
     ViewData["Title"] = "Delete Author";
 }
 
-<h1 class="text-center text-danger">@ViewData["Title"]</h1>
-<hr />
+<div class="d-flex justify-content-center align-items-center" style="min-height: 70vh;">
 
-<div class="alert alert-warning text-center">
-    Are you sure you want to delete this author?
-</div>
+    <div class="glass-card p-4 text-center" style="max-width: 500px; width: 100%;">
 
-<div class="card">
-    <div class="card-body">
+        <h2 class="text-danger mb-3">
+            👤 Delete Author
+        </h2>
 
-        <h4> Author: <strong>@Model.FirstName @Model.LastName</strong></h4>
-        <h5>From: <strong>@Model.Country</strong> </h5>
+        <p class="text-black mb-4">
+            Are you sure you want to delete this author?
+        </p>
+
+        <div class="mb-4">
+            <h5 class="text-black fw-bold">
+                @Model.FirstName @Model.LastName
+            </h5>
+
+            <p class="text-muted">
+                @Model.Country
+            </p>
+
+            <p class="text-muted small">
+                This author cannot be deleted if it is assigned to any book.
+            </p>
+        </div>
 
         <form asp-action="DeleteConfirmed" method="post">
             <input type="hidden" asp-for="Id" />
 
-            <button type="submit" class="btn btn-danger">
-                Delete
-            </button>
+            <div class="d-flex justify-content-center gap-3 mt-3">
 
-            <a asp-action="Index" class="btn btn-secondary">
-                Cancel
-            </a>
+                <button type="submit" class="btn btn-danger px-4">
+                    Delete
+                </button>
+
+                <a asp-action="Index" class="btn btn-secondary px-4">
+                    Cancel
+                </a>
+
+            </div>
         </form>
 
     </div>
+
 </div>

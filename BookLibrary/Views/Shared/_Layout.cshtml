@@ -126,18 +126,38 @@
         </nav>
     </header>
 
-    @if (TempData["SuccessMessage"] != null)
-    {
-        <div class="alert alert-success text-center mb-0 auto-dismiss">
-            @TempData["SuccessMessage"]
-        </div>
-    }
-    @if (TempData["ErrorMessage"] != null)
-    {
-        <div class="alert alert-danger text-center mb-0 auto-dismiss">
-            @TempData["ErrorMessage"]
-        </div>
-    }
+    <div class="toast-container position-fixed top-0 start-50 translate-middle-x p-3"
+         style="z-index: 9999;">
+
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="toast custom-toast success show auto-dismiss">
+                <div class="d-flex align-items-center">
+
+                    <div class="toast-body">
+                        <i class="bi bi-check-circle me-2"></i>
+                        @TempData["SuccessMessage"]
+                    </div>
+                    
+                </div>
+            </div>
+        }
+
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <div class="toast custom-toast error show auto-dismiss">
+                <div class="d-flex align-items-center">
+
+                    <div class="toast-body">
+                        <i class="bi bi-x-circle me-2"></i>
+                        @TempData["ErrorMessage"]
+                    </div>
+
+                </div>
+            </div>
+        }
+
+    </div>
 
     <main class="container flex-fill">
         <div class="pb-3">
@@ -147,7 +167,7 @@
 
     <footer class="footer bg-dark text-light mt-auto">
         <div class="container text-center py-3">
-            &copy; 2026 - BookLibrary
+            &copy; 2026 - Book Library by Kristiyan Kamboshev
         </div>
     </footer>
 

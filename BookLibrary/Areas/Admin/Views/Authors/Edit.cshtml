@@ -4,38 +4,56 @@
     ViewData["Title"] = "Edit Author";
 }
 
-<h1 class="text-center text-warning">@ViewData["Title"]</h1>
-<hr />
+<div class="d-flex justify-content-center align-items-center" style="min-height: 80vh;">
 
-<form asp-action="Edit" method="post">
+    <div class="glass-card p-4" style="max-width: 500px; width: 100%;">
 
-    <input type="hidden" asp-for="Id" />
+        <h2 class="text-center mb-4 fw-bold" style="color: orange;">
+            <i class="bi bi-pencil-square"></i> Edit Author
+        </h2>
 
-    <div class="form-group mb-3">
-        <label asp-for="FirstName"></label>
-        <input asp-for="FirstName" class="form-control" />
-        <span asp-validation-for="FirstName" class="text-danger"></span>
+        <form asp-action="Edit" method="post">
+
+            <input type="hidden" asp-for="Id" />
+
+            <div class="mb-3">
+                <label asp-for="FirstName" class="form-label fw-bold text-dark"></label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="LastName" class="form-label fw-bold text-dark"></label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="CountryId" class="form-label fw-bold text-dark"></label>
+                <select asp-for="CountryId"
+                        asp-items="Model.Countries"
+                        class="form-select">
+                </select>
+                <span asp-validation-for="CountryId" class="text-danger small"></span>
+            </div>
+
+            <div class="d-flex justify-content-center gap-3 mt-4">
+
+                <button type="submit" class="btn btn-warning px-4">
+                    Save
+                </button>
+
+                <a asp-action="Index" class="btn btn-secondary px-4">
+                    Cancel
+                </a>
+
+            </div>
+
+        </form>
+
     </div>
 
-    <div class="form-group mb-3">
-        <label asp-for="LastName"></label>
-        <input asp-for="LastName" class="form-control" />
-        <span asp-validation-for="LastName" class="text-danger"></span>
-    </div>
-
-    <div class="form-group mb-3">
-        <label asp-for="CountryId"></label>
-        <select asp-for="CountryId"
-                asp-items="Model.Countries"
-                class="form-control">
-        </select>
-        <span asp-validation-for="CountryId" class="text-danger"></span>
-    </div>
-
-    <button type="submit" class="btn btn-warning">Save</button>
-    <a asp-action="Index" class="btn btn-secondary">Back</a>
-
-</form>
+</div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
